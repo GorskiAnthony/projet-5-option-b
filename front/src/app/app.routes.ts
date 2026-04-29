@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,6 +20,26 @@ export const routes: Routes = [
     path: 'feed',
     loadComponent: () =>
       import('./features/feed/feed.component').then(m => m.FeedComponent)
+  },
+  {
+    path: 'topics',
+    loadComponent: () =>
+      import('./features/topics/topics.component').then(m => m.TopicsComponent)
+  },
+  {
+    path: 'posts/create',
+    loadComponent: () =>
+      import('./features/posts/create-post/create-post.component').then(m => m.CreatePostComponent)
+  },
+  {
+    path: 'posts/:id',
+    loadComponent: () =>
+      import('./features/posts/post-detail/post-detail.component').then(m => m.PostDetailComponent)
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/profile/profile.component').then(m => m.ProfileComponent)
   },
   { path: '**', redirectTo: '' }
 ];
