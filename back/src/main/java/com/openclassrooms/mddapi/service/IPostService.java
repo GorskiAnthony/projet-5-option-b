@@ -11,5 +11,5 @@ public interface IPostService {
 
     PostDto getById(Long id);
 
-    PostDto create(CreatePostRequest request);
+    PostDto create(CreatePostRequest request, String authorEmail);
 }

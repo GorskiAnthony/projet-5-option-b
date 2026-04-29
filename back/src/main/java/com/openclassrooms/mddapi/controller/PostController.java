@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.IPostService;
 
 @RestController
@@ -40,9 +42,11 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> create(@RequestBody CreatePostRequest request) {
+    public ResponseEntity<PostDto> create(@RequestBody CreatePostRequest request,
+                                          @AuthenticationPrincipal User user) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(postService.create(request));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(postService.create(request, user.getEmail()));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

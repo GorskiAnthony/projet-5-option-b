@@ -10,18 +10,22 @@ import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
 public class PostService implements IPostService {
 
     private final PostRepository postRepository;
     private final TopicRepository topicRepository;
+    private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository, TopicRepository topicRepository) {
+    public PostService(PostRepository postRepository, TopicRepository topicRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.topicRepository = topicRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -40,14 +44,16 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public PostDto create(CreatePostRequest request) {
+    public PostDto create(CreatePostRequest request, String authorEmail) {
         Topic topic = topicRepository.findById(request.getTopicId())
                 .orElseThrow(() -> new RuntimeException("Topic non trouvé"));
+        User author = userRepository.findByEmail(authorEmail)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         Post post = new Post();
         post.setTopic(topic);
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        post.setAuthor("anonymous"); // remplacé par l'utilisateur connecté quand l'auth sera prête
+        post.setAuthor(author.getRealUsername());
         post.setCreatedAt(LocalDateTime.now());
         return toDto(postRepository.save(post));
     }
