@@ -37,6 +37,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     // Spring Security — identifiant = email ou username
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
         return userRepository.findByEmail(identifier)
                 .or(() -> userRepository.findByUsername(identifier))
