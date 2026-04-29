@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.mddapi.dto.RegisterRequest;
 import com.openclassrooms.mddapi.dto.UpdateProfileRequest;
@@ -34,6 +35,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public User register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail()))
             throw new RuntimeException("Email déjà utilisé");
@@ -49,6 +51,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDto updateProfile(String email, UpdateProfileRequest request) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));

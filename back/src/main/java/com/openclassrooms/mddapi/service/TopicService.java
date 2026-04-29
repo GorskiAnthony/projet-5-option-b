@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.model.Topic;
@@ -32,6 +33,7 @@ public class TopicService implements ITopicService {
     }
 
     @Override
+    @Transactional
     public void subscribe(Long topicId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
@@ -42,6 +44,7 @@ public class TopicService implements ITopicService {
     }
 
     @Override
+    @Transactional
     public void unsubscribe(Long topicId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));

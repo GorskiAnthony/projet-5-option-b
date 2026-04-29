@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -47,6 +48,7 @@ public class PostService implements IPostService {
     }
 
     @Override
+    @Transactional
     public PostDto create(CreatePostRequest request, String authorEmail) {
         Topic topic = topicRepository.findById(request.getTopicId())
                 .orElseThrow(() -> new RuntimeException("Topic non trouvé"));
