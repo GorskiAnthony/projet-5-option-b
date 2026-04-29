@@ -20,6 +20,10 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.JwtUtils;
 import com.openclassrooms.mddapi.service.IUserService;
 
+/**
+ * Expose les endpoints d'inscription ({@code POST /api/auth/register})
+ * et de connexion ({@code POST /api/auth/login}).
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

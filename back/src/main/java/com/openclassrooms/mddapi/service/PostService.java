@@ -16,6 +16,10 @@ import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+/**
+ * Implémentation de {@link IPostService}.
+ * Gère la création et la consultation des articles.
+ */
 @Service
 public class PostService implements IPostService {
 

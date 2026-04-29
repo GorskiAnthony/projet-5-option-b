@@ -16,6 +16,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Filtre HTTP exécuté une fois par requête.
+ * Extrait le token Bearer, le valide via {@link JwtUtils} et alimente
+ * le {@code SecurityContextHolder} si le token est valide.
+ */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 

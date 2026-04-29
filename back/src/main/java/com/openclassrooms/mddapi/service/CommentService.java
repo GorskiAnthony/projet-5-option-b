@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 
+/**
+ * Implémentation de {@link ICommentService}.
+ * Gère la lecture des commentaires par article.
+ */
 @Service
 public class CommentService implements ICommentService {
 

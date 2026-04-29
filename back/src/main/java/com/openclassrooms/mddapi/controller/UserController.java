@@ -15,6 +15,10 @@ import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.IUserService;
 
+/**
+ * Expose les endpoints du profil utilisateur authentifié
+ * ({@code GET /api/users/me}, {@code PUT /api/users/me}).
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

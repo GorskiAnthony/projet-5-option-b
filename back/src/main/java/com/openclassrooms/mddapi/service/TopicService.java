@@ -11,6 +11,10 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+/**
+ * Implémentation de {@link ITopicService}.
+ * Gère les topics et les abonnements utilisateur.
+ */
 @Service
 public class TopicService implements ITopicService {
 

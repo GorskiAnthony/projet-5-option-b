@@ -20,6 +20,10 @@ import com.openclassrooms.mddapi.security.JwtFilter;
 
 import java.util.List;
 
+/**
+ * Configuration Spring Security : CORS, session stateless, filtre JWT,
+ * règles d'autorisation et point d'entrée 401 personnalisé.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

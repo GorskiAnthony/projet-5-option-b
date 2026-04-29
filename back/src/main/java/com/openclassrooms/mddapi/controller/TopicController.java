@@ -15,6 +15,9 @@ import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.ITopicService;
 
+/**
+ * Expose les endpoints de gestion des topics et des abonnements.
+ */
 @RestController
 @RequestMapping("/api/topics")
 public class TopicController {

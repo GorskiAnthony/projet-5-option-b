@@ -19,6 +19,10 @@ import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.IPostService;
 
+/**
+ * Expose les endpoints de gestion des articles :
+ * fil d'actualité, consultation et création.
+ */
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {

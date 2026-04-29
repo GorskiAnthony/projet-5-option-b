@@ -12,6 +12,10 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
+/**
+ * Utilitaire JWT : génération, extraction du sujet et validation des tokens.
+ * Le secret et la durée de vie sont injectés depuis {@code application.properties}.
+ */
 @Component
 public class JwtUtils {
 

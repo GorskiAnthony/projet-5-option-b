@@ -15,6 +15,10 @@ import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+/**
+ * Implémentation de {@link IUserService} et {@link UserDetailsService}.
+ * Gère l'inscription, la mise à jour du profil et l'authentification Spring Security.
+ */
 @Service
 public class UserService implements IUserService, UserDetailsService {
 
