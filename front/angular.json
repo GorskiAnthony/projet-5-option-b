@@ -88,6 +88,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "src/environments/**",
+              "src/main.ts",
+              "src/polyfills.ts",
+              "src/test.ts"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
