@@ -52,6 +52,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Requis par Spring Security pour Argon2PasswordEncoder -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk18on</artifactId>
+			<version>1.78.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>

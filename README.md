@@ -61,28 +61,28 @@ Navigateur → Angular SPA → [AuthInterceptor: Bearer token]
 
 ### Backend
 
-| Technologie         | Version  | Rôle                                  |
-|---------------------|----------|---------------------------------------|
-| Java                | 21       | Langage                               |
-| Spring Boot         | 3.5.8    | Framework principal                   |
-| Spring Security     | (inclus) | Authentification / autorisation       |
-| Spring Data JPA     | (inclus) | ORM et accès base de données          |
-| JJWT                | 0.12.3   | Génération et validation des JWT      |
-| MySQL               | 8+       | Base de données de production         |
-| H2                  | (test)   | Base de données en mémoire pour tests |
-| JaCoCo              | (inclus) | Couverture de code                    |
-| Maven               | 3.9+     | Gestion de build et dépendances       |
+| Technologie     | Version  | Rôle                                  |
+| --------------- | -------- | ------------------------------------- |
+| Java            | 21       | Langage                               |
+| Spring Boot     | 3.5.8    | Framework principal                   |
+| Spring Security | (inclus) | Authentification / autorisation       |
+| Spring Data JPA | (inclus) | ORM et accès base de données          |
+| JJWT            | 0.12.3   | Génération et validation des JWT      |
+| MySQL           | 8+       | Base de données de production         |
+| H2              | (test)   | Base de données en mémoire pour tests |
+| JaCoCo          | (inclus) | Couverture de code                    |
+| Maven           | 3.9+     | Gestion de build et dépendances       |
 
 ### Frontend
 
-| Technologie         | Version  | Rôle                                  |
-|---------------------|----------|---------------------------------------|
-| Angular             | 20       | Framework SPA                         |
-| TypeScript          | 5.9      | Langage                               |
-| RxJS                | 7.8      | Programmation réactive                |
-| Angular Signals     | (inclus) | Gestion d'état réactive fine-grained  |
-| Karma + Jasmine     | 6.4 / 4  | Tests unitaires frontend              |
-| karma-coverage      | 2.2      | Couverture de code frontend           |
+| Technologie     | Version  | Rôle                                 |
+| --------------- | -------- | ------------------------------------ |
+| Angular         | 20       | Framework SPA                        |
+| TypeScript      | 5.9      | Langage                              |
+| RxJS            | 7.8      | Programmation réactive               |
+| Angular Signals | (inclus) | Gestion d'état réactive fine-grained |
+| Karma + Jasmine | 6.4 / 4  | Tests unitaires frontend             |
+| karma-coverage  | 2.2      | Couverture de code frontend          |
 
 ---
 
@@ -114,9 +114,6 @@ Connectez-vous à MySQL en tant qu'administrateur et exécutez :
 
 ```sql
 CREATE DATABASE mdd CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'oc_user'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON mdd.* TO 'oc_user'@'localhost';
-FLUSH PRIVILEGES;
 ```
 
 > **Note :** Le schéma et les données de démo (topics, articles, commentaires) sont créés automatiquement au premier démarrage du backend grâce à `spring.jpa.hibernate.ddl-auto=create` et `import.sql`.
@@ -150,12 +147,12 @@ npm install
 
 Toutes les valeurs sensibles sont externalisées via des variables d'environnement avec une valeur par défaut pour le développement local.
 
-| Variable d'environnement | Valeur par défaut (dev)                                        | Description                    |
-|--------------------------|----------------------------------------------------------------|--------------------------------|
-| `DB_URL`                 | `jdbc:mysql://localhost:3306/mdd?serverTimezone=UTC`           | URL JDBC de la base de données |
-| `DB_USERNAME`            | `oc_user`                                                      | Utilisateur MySQL              |
-| `DB_PASSWORD`            | `password`                                                     | Mot de passe MySQL             |
-| `JWT_SECRET`             | Clé Base64 embarquée (dev uniquement)                          | Secret de signature JWT        |
+| Variable d'environnement | Valeur par défaut (dev)                              | Description                    |
+| ------------------------ | ---------------------------------------------------- | ------------------------------ |
+| `DB_URL`                 | `jdbc:mysql://localhost:3306/mdd?serverTimezone=UTC` | URL JDBC de la base de données |
+| `DB_USERNAME`            | `votre user`                                         | Utilisateur MySQL              |
+| `DB_PASSWORD`            | `votre mot de passe`                                 | Mot de passe MySQL             |
+| `JWT_SECRET`             | Clé Base64 embarquée (dev uniquement)                | Secret de signature JWT        |
 
 Pour un environnement réel, définissez ces variables avant de lancer l'application :
 
@@ -177,10 +174,10 @@ spring.jpa.show-sql=false              # Ne pas exposer les requêtes SQL dans l
 
 ### Frontend — `front/src/environments/`
 
-| Fichier                   | Usage              | `apiUrl`                      |
-|---------------------------|--------------------|-------------------------------|
-| `environment.ts`          | Développement      | `http://localhost:9000/api`   |
-| `environment.prod.ts`     | Production (build) | À adapter à l'URL de prod     |
+| Fichier               | Usage              | `apiUrl`                    |
+| --------------------- | ------------------ | --------------------------- |
+| `environment.ts`      | Développement      | `http://localhost:9000/api` |
+| `environment.prod.ts` | Production (build) | À adapter à l'URL de prod   |
 
 Pour adapter l'URL de l'API en production, modifiez `environment.prod.ts` avant de builder.
 
@@ -198,6 +195,7 @@ cd back
 L'API est disponible sur `http://localhost:9000`.
 
 Au premier démarrage, Spring Boot crée automatiquement :
+
 - Le schéma de base de données
 - Les 10 thèmes de démo
 - 8 articles et 7 commentaires d'exemple
@@ -226,28 +224,29 @@ L'application est disponible sur `http://localhost:4200`.
 
 ```json
 {
-  "username": "alice",
-  "email": "alice@exemple.fr",
-  "password": "motdepasse8"
+	"username": "alice",
+	"email": "alice@exemple.fr",
+	"password": "motdepasse8"
 }
 ```
 
-| Champ      | Type   | Contraintes                         |
-|------------|--------|-------------------------------------|
-| `username` | string | Obligatoire, 3–30 caractères        |
-| `email`    | string | Obligatoire, format email valide    |
-| `password` | string | Obligatoire, 8 caractères minimum   |
+| Champ      | Type   | Contraintes                       |
+| ---------- | ------ | --------------------------------- |
+| `username` | string | Obligatoire, 3–30 caractères      |
+| `email`    | string | Obligatoire, format email valide  |
+| `password` | string | Obligatoire, 8 caractères minimum |
 
 **Réponse `201 Created` :**
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1...",
-  "user": { "id": 1, "username": "alice", "email": "alice@exemple.fr" }
+	"token": "eyJhbGciOiJIUzI1...",
+	"user": { "id": 1, "username": "alice", "email": "alice@exemple.fr" }
 }
 ```
 
 **Erreurs :**
+
 - `400` — Champs invalides (validation)
 - `409` — Email ou nom d'utilisateur déjà utilisé
 
@@ -259,8 +258,8 @@ L'application est disponible sur `http://localhost:4200`.
 
 ```json
 {
-  "identifier": "alice@exemple.fr",
-  "password": "motdepasse8"
+	"identifier": "alice@exemple.fr",
+	"password": "motdepasse8"
 }
 ```
 
@@ -270,12 +269,13 @@ L'application est disponible sur `http://localhost:4200`.
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1...",
-  "user": { "id": 1, "username": "alice", "email": "alice@exemple.fr" }
+	"token": "eyJhbGciOiJIUzI1...",
+	"user": { "id": 1, "username": "alice", "email": "alice@exemple.fr" }
 }
 ```
 
 **Erreurs :**
+
 - `401` — Identifiants incorrects
 
 ---
@@ -298,21 +298,22 @@ L'application est disponible sur `http://localhost:4200`.
 
 ```json
 {
-  "username": "alice2",
-  "email": "alice2@exemple.fr",
-  "password": "nouveaumotdepasse"
+	"username": "alice2",
+	"email": "alice2@exemple.fr",
+	"password": "nouveaumotdepasse"
 }
 ```
 
-| Champ      | Contraintes                                      |
-|------------|--------------------------------------------------|
-| `username` | 3–30 caractères (si fourni)                      |
-| `email`    | Format email valide (si fourni)                  |
-| `password` | 8 caractères minimum (si fourni)                 |
+| Champ      | Contraintes                      |
+| ---------- | -------------------------------- |
+| `username` | 3–30 caractères (si fourni)      |
+| `email`    | Format email valide (si fourni)  |
+| `password` | 8 caractères minimum (si fourni) |
 
 **Réponse `200 OK` :** UserDto mis à jour
 
 **Erreurs :**
+
 - `409` — Email ou nom d'utilisateur déjà pris par un autre compte
 
 ---
@@ -325,18 +326,18 @@ L'application est disponible sur `http://localhost:4200`.
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Java",
-    "description": "Tout sur le langage Java...",
-    "subscribed": true
-  },
-  {
-    "id": 2,
-    "name": "Spring Boot",
-    "description": "Framework Java pour APIs REST...",
-    "subscribed": false
-  }
+	{
+		"id": 1,
+		"name": "Java",
+		"description": "Tout sur le langage Java...",
+		"subscribed": true
+	},
+	{
+		"id": 2,
+		"name": "Spring Boot",
+		"description": "Framework Java pour APIs REST...",
+		"subscribed": false
+	}
 ]
 ```
 
@@ -349,6 +350,7 @@ L'application est disponible sur `http://localhost:4200`.
 **Réponse `200 OK`** (corps vide)
 
 **Erreurs :**
+
 - `404` — Thème introuvable
 
 ---
@@ -358,6 +360,7 @@ L'application est disponible sur `http://localhost:4200`.
 **Réponse `200 OK`** (corps vide)
 
 **Erreurs :**
+
 - `404` — Thème introuvable
 
 ---
@@ -372,15 +375,15 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 
 ```json
 [
-  {
-    "id": 5,
-    "title": "Les Signals en Angular",
-    "content": "Les Signals introduits en Angular 16...",
-    "author": "charlie",
-    "topicId": 3,
-    "topicName": "Angular",
-    "createdAt": "2025-04-05T16:00:00"
-  }
+	{
+		"id": 5,
+		"title": "Les Signals en Angular",
+		"content": "Les Signals introduits en Angular 16...",
+		"author": "charlie",
+		"topicId": 3,
+		"topicName": "Angular",
+		"createdAt": "2025-04-05T16:00:00"
+	}
 ]
 ```
 
@@ -391,6 +394,7 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 **Réponse `200 OK` :** PostDto
 
 **Erreurs :**
+
 - `404` — Article introuvable
 
 ---
@@ -401,14 +405,14 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 
 ```json
 {
-  "topicId": 3,
-  "title": "Mon article sur Angular",
-  "content": "Contenu de l'article..."
+	"topicId": 3,
+	"title": "Mon article sur Angular",
+	"content": "Contenu de l'article..."
 }
 ```
 
 | Champ     | Type   | Contraintes                     |
-|-----------|--------|---------------------------------|
+| --------- | ------ | ------------------------------- |
 | `topicId` | number | Obligatoire, doit exister       |
 | `title`   | string | Obligatoire, max 255 caractères |
 | `content` | string | Obligatoire                     |
@@ -416,6 +420,7 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 **Réponse `201 Created` :** PostDto
 
 **Erreurs :**
+
 - `404` — Thème introuvable
 
 ---
@@ -428,13 +433,13 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 
 ```json
 [
-  {
-    "id": 1,
-    "content": "Excellent article !",
-    "author": "bob",
-    "postId": 5,
-    "createdAt": "2025-04-06T09:00:00"
-  }
+	{
+		"id": 1,
+		"content": "Excellent article !",
+		"author": "bob",
+		"postId": 5,
+		"createdAt": "2025-04-06T09:00:00"
+	}
 ]
 ```
 
@@ -451,6 +456,7 @@ Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés du 
 **Réponse `201 Created` :** CommentDto
 
 **Erreurs :**
+
 - `404` — Article introuvable
 
 ---
@@ -467,10 +473,10 @@ Pour les erreurs de validation (`400`), les champs incorrects sont détaillés :
 
 ```json
 {
-  "erreurs": {
-    "email": "Format d'email invalide",
-    "password": "Le mot de passe doit contenir au moins 8 caractères"
-  }
+	"erreurs": {
+		"email": "Format d'email invalide",
+		"password": "Le mot de passe doit contenir au moins 8 caractères"
+	}
 }
 ```
 
@@ -496,49 +502,49 @@ users ──────────────────────── u
 
 ### Table `users`
 
-| Colonne      | Type         | Contraintes             |
-|--------------|--------------|-------------------------|
-| `id`         | BIGINT       | PK, AUTO_INCREMENT      |
-| `username`   | VARCHAR(255) | NOT NULL, UNIQUE        |
-| `email`      | VARCHAR(255) | NOT NULL, UNIQUE        |
-| `password`   | VARCHAR(255) | NOT NULL (BCrypt hash)  |
-| `created_at` | DATETIME     |                         |
+| Colonne      | Type         | Contraintes            |
+| ------------ | ------------ | ---------------------- |
+| `id`         | BIGINT       | PK, AUTO_INCREMENT     |
+| `username`   | VARCHAR(255) | NOT NULL, UNIQUE       |
+| `email`      | VARCHAR(255) | NOT NULL, UNIQUE       |
+| `password`   | VARCHAR(255) | NOT NULL (Argon2id hash) |
+| `created_at` | DATETIME     |                        |
 
 ### Table `topics`
 
 | Colonne       | Type         | Contraintes        |
-|---------------|--------------|--------------------|
+| ------------- | ------------ | ------------------ |
 | `topic_id`    | BIGINT       | PK, AUTO_INCREMENT |
 | `name`        | VARCHAR(255) | NOT NULL           |
 | `description` | TEXT         |                    |
 
 ### Table `posts`
 
-| Colonne      | Type         | Contraintes             |
-|--------------|--------------|-------------------------|
-| `post_id`    | BIGINT       | PK, AUTO_INCREMENT      |
-| `topic_id`   | BIGINT       | FK → topics.topic_id    |
-| `title`      | VARCHAR(255) | NOT NULL                |
-| `content`    | TEXT         | NOT NULL                |
-| `author`     | VARCHAR(255) | NOT NULL (username)     |
-| `created_at` | DATETIME     | NOT NULL                |
+| Colonne      | Type         | Contraintes          |
+| ------------ | ------------ | -------------------- |
+| `post_id`    | BIGINT       | PK, AUTO_INCREMENT   |
+| `topic_id`   | BIGINT       | FK → topics.topic_id |
+| `title`      | VARCHAR(255) | NOT NULL             |
+| `content`    | TEXT         | NOT NULL             |
+| `author`     | VARCHAR(255) | NOT NULL (username)  |
+| `created_at` | DATETIME     | NOT NULL             |
 
 ### Table `comments`
 
-| Colonne      | Type         | Contraintes             |
-|--------------|--------------|-------------------------|
-| `comment_id` | BIGINT       | PK, AUTO_INCREMENT      |
-| `post_id`    | BIGINT       | FK → posts.post_id      |
-| `content`    | TEXT         | NOT NULL                |
-| `author`     | VARCHAR(255) | NOT NULL (username)     |
-| `created_at` | DATETIME     | NOT NULL                |
+| Colonne      | Type         | Contraintes         |
+| ------------ | ------------ | ------------------- |
+| `comment_id` | BIGINT       | PK, AUTO_INCREMENT  |
+| `post_id`    | BIGINT       | FK → posts.post_id  |
+| `content`    | TEXT         | NOT NULL            |
+| `author`     | VARCHAR(255) | NOT NULL (username) |
+| `created_at` | DATETIME     | NOT NULL            |
 
 ### Table `user_subscriptions`
 
-| Colonne    | Type   | Contraintes               |
-|------------|--------|---------------------------|
-| `user_id`  | BIGINT | FK → users.id             |
-| `topic_id` | BIGINT | FK → topics.topic_id      |
+| Colonne    | Type   | Contraintes          |
+| ---------- | ------ | -------------------- |
+| `user_id`  | BIGINT | FK → users.id        |
+| `topic_id` | BIGINT | FK → topics.topic_id |
 
 > **Remarque :** Le champ `author` dans `posts` et `comments` stocke le `username` de l'utilisateur au moment de la publication. Cette dénormalisation intentionnelle préserve l'historique si l'utilisateur change de nom.
 
@@ -563,10 +569,10 @@ Le rapport HTML de couverture est généré dans :
 
 **Organisation des tests :**
 
-| Package                | Type         | Description                                    |
-|------------------------|--------------|------------------------------------------------|
-| `service/`             | Unitaire     | JUnit 5 + Mockito, pattern AAA                 |
-| `integration/`         | Intégration  | SpringBootTest, H2 en mémoire, flux complets   |
+| Package        | Type        | Description                                  |
+| -------------- | ----------- | -------------------------------------------- |
+| `service/`     | Unitaire    | JUnit 5 + Mockito, pattern AAA               |
+| `integration/` | Intégration | SpringBootTest, H2 en mémoire, flux complets |
 
 Les DTOs et modèles sont exclus de la couverture JaCoCo (POJO sans logique à tester).
 
@@ -596,20 +602,22 @@ Le rapport HTML est généré dans :
 2. **Variables d'environnement** — Ne jamais committer les valeurs de production. Définir `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` et `JWT_SECRET` via le gestionnaire de secrets de votre infrastructure.
 
 3. **JWT Secret** — Utiliser une clé d'au moins 256 bits en Base64. Générer avec :
-   ```bash
-   openssl rand -base64 32
-   ```
+
+    ```bash
+    openssl rand -base64 32
+    ```
 
 4. **CORS** — Mettre à jour les origines autorisées dans `SecurityConfig.corsConfigurationSource()` avec le domaine réel du frontend.
 
 5. **URL API** — Mettre à jour `front/src/environments/environment.prod.ts` avec l'URL de production de l'API.
 
 6. **Build de production frontend :**
-   ```bash
-   cd front
-   npm run build
-   # Les fichiers compilés sont dans front/dist/mdd-client/
-   ```
+
+    ```bash
+    cd front
+    npm run build
+    # Les fichiers compilés sont dans front/dist/mdd-client/
+    ```
 
 7. **Logs** — En profil `prod` (`-Dspring.profiles.active=prod`), les logs sont écrits dans `logs/mdd-api.log` avec rotation quotidienne sur 30 jours.
 
@@ -619,7 +627,7 @@ Le rapport HTML est généré dans :
 
 ### Authentification
 
-- Les mots de passe sont hashés avec **BCrypt** (facteur de coût 10) — les mots de passe en clair ne sont jamais stockés ni loggués.
+- Les mots de passe sont hashés avec **Argon2id** (m=16 Mo, t=2 itérations, p=1) via `Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8()` — algorithme recommandé par l'OWASP, résistant aux attaques GPU/ASIC grâce à sa contrainte mémoire. Les mots de passe en clair ne sont jamais stockés ni loggués.
 - Les tokens JWT sont signés avec HMAC-SHA256 et ont une durée de vie de **24 heures**.
 - Le secret JWT n'apparaît pas dans les logs. Externalisez-le via la variable `JWT_SECRET` en production.
 - Le token est stocké côté client dans `localStorage` et inclus dans chaque requête via un intercepteur HTTP.
@@ -672,8 +680,9 @@ Allez dans **Thèmes** (menu de navigation). Chaque carte affiche un bouton **S'
 ### Comment me désabonner d'un thème ?
 
 Deux façons :
+
 - Depuis la page **Thèmes** : cliquez sur **Se désabonner**.
-- Depuis votre **Profil** : la section *Abonnements* liste vos thèmes actifs avec un bouton de désabonnement.
+- Depuis votre **Profil** : la section _Abonnements_ liste vos thèmes actifs avec un bouton de désabonnement.
 
 ### Comment publier un article ?
 
