@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .navbar__logo {
@@ -49,6 +50,7 @@
   border: none;
   cursor: pointer;
   transition: color 0.15s;
+  white-space: nowrap;
 }
 
 .navbar__logout:hover {
@@ -61,6 +63,7 @@
   color: var(--text-muted);
   text-decoration: none;
   transition: color 0.15s;
+  flex-shrink: 0;
 }
 
 .navbar__user-btn:hover {
@@ -78,6 +81,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .navbar__burger span {
@@ -102,8 +106,9 @@
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 12px 0;
+  padding: 8px 0;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 99;
 }
 
 .navbar__mobile-link {
@@ -116,6 +121,7 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  width: 100%;
   transition: background 0.15s;
 }
 
@@ -128,6 +134,10 @@
 }
 
 @media (max-width: 640px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
   .navbar__desktop { display: none; }
   .navbar__burger { display: flex; }
 }
