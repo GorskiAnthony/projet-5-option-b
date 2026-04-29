@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { UserService } from '../../core/services/user.service';
 import { TopicService } from '../../core/services/topic.service';
@@ -22,9 +22,9 @@ export class ProfileComponent implements OnInit {
   error = signal('');
 
   form = this.fb.group({
-    username: [''],
-    email: [''],
-    password: ['']
+    username: ['', [Validators.minLength(3), Validators.maxLength(30)]],
+    email: ['', [Validators.email]],
+    password: ['', [Validators.minLength(8)]]
   });
 
   ngOnInit() {
