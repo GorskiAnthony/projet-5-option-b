@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,8 @@ import com.openclassrooms.mddapi.repository.UserRepository;
  */
 @Service
 public class UserService implements IUserService, UserDetailsService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -51,7 +55,9 @@ public class UserService implements IUserService, UserDetailsService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
-        return userRepository.save(user);
+        User saved = userRepository.save(user);
+        log.info("Nouvel utilisateur enregistré : id={}", saved.getId());
+        return saved;
     }
 
     @Override
@@ -63,7 +69,9 @@ public class UserService implements IUserService, UserDetailsService {
         if (request.getEmail() != null) user.setEmail(request.getEmail());
         if (request.getPassword() != null && !request.getPassword().isBlank())
             user.setPassword(passwordEncoder.encode(request.getPassword()));
-        return toDto(userRepository.save(user));
+        UserDto dto = toDto(userRepository.save(user));
+        log.info("Profil mis à jour : id={}", user.getId());
+        return dto;
     }
 
     @Override

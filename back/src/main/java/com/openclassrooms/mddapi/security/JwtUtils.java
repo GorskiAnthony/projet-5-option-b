@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,8 @@ import jakarta.annotation.PostConstruct;
  */
 @Component
 public class JwtUtils {
+
+    private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
 
     @Value("${jwt.secret}")
     private String secret;
@@ -51,6 +55,7 @@ public class JwtUtils {
             Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
             return true;
         } catch (Exception e) {
+            log.warn("Token JWT invalide : {}", e.getMessage());
             return false;
         }
     }
