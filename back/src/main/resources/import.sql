@@ -1,19 +1,30 @@
 -- Topics
-INSERT INTO topics (name) VALUES ('Java');
-INSERT INTO topics (name) VALUES ('Spring Boot');
-INSERT INTO topics (name) VALUES ('Angular');
-INSERT INTO topics (name) VALUES ('React');
-INSERT INTO topics (name) VALUES ('Python');
-INSERT INTO topics (name) VALUES ('JavaScript');
-INSERT INTO topics (name) VALUES ('TypeScript');
-INSERT INTO topics (name) VALUES ('SQL & Bases de données');
-INSERT INTO topics (name) VALUES ('DevOps & CI/CD');
-INSERT INTO topics (name) VALUES ('Architecture logicielle');
+INSERT INTO topics (name, description) VALUES ('Java', 'Tout sur le langage Java : syntaxe, JVM, nouveautés des dernières versions et bonnes pratiques.');
+INSERT INTO topics (name, description) VALUES ('Spring Boot', 'Framework Java pour créer des APIs REST robustes avec une configuration minimale.');
+INSERT INTO topics (name, description) VALUES ('Angular', 'Framework front-end TypeScript maintenu par Google pour construire des SPAs modernes.');
+INSERT INTO topics (name, description) VALUES ('React', 'Bibliothèque JavaScript de Meta pour construire des interfaces utilisateur réactives.');
+INSERT INTO topics (name, description) VALUES ('Python', 'Langage polyvalent utilisé en scripting, data science, machine learning et développement web.');
+INSERT INTO topics (name, description) VALUES ('JavaScript', 'Langage incontournable du web, côté client comme côté serveur avec Node.js.');
+INSERT INTO topics (name, description) VALUES ('TypeScript', 'Superset typé de JavaScript qui améliore la qualité du code et l''expérience développeur.');
+INSERT INTO topics (name, description) VALUES ('SQL & Bases de données', 'Conception de schémas, requêtes SQL, ORM et optimisation des performances en base de données.');
+INSERT INTO topics (name, description) VALUES ('DevOps & CI/CD', 'Automatisation, déploiement continu, Docker, Kubernetes et culture DevOps.');
+INSERT INTO topics (name, description) VALUES ('Architecture logicielle', 'Patterns de conception, microservices, DDD et décisions d''architecture à grande échelle.');
 
--- Posts (à compléter quand Post.java aura ses champs title, content, author, created_at)
--- INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (1, 'Les nouveautés de Java 21', 'Java 21 introduit les virtual threads...', 'alice', '2025-03-10 10:00:00');
--- INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (2, 'Spring Boot 3 et Jakarta EE', 'La migration vers Jakarta EE...', 'bob', '2025-03-12 14:30:00');
--- INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (3, 'Angular 20 standalone components', 'Les standalone components simplifient...', 'charlie', '2025-03-15 09:00:00');
+-- Posts (topic_id correspond à l'ordre d'insertion ci-dessus)
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (1, 'Les nouveautés de Java 21', 'Java 21 est une version LTS majeure qui introduit les virtual threads (Project Loom), permettant de gérer des milliers de connexions concurrentes sans la complexité des threads OS. Les record patterns et pattern matching for switch sont aussi finalisés, rendant le code beaucoup plus expressif. Si vous n''êtes pas encore passés à Java 21, c''est le moment !', 'alice', '2025-03-10 10:00:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (1, 'Comprendre le Garbage Collector en Java', 'Le GC de la JVM est souvent mal compris. Il existe plusieurs implémentations : G1GC (par défaut depuis Java 9), ZGC et Shenandoah pour les applications à faible latence. Comprendre quand et pourquoi le GC se déclenche est essentiel pour éviter les pauses inattendues en production.', 'bob', '2025-03-18 09:30:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (2, 'Spring Boot 3 et la migration Jakarta EE', 'La migration de Spring Boot 2 vers Spring Boot 3 implique de passer de javax.* à jakarta.*. C''est un changement de namespace qui impacte tous les imports. Pensez aussi à vérifier vos dépendances tierces : toutes ne sont pas encore compatibles Jakarta EE 10.', 'charlie', '2025-03-12 14:30:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (2, 'Sécuriser son API REST avec Spring Security', 'Spring Security 6 apporte une configuration fluent plus lisible. La configuration par défaut bloque tout, ce qui est une bonne chose. On configure ensuite les règles par route avec requestMatchers(). Coupler cela avec JWT permet d''avoir une API stateless et sécurisée.', 'alice', '2025-04-01 11:00:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (3, 'Angular 20 : les standalone components', 'Depuis Angular 14, les standalone components permettent de se passer de NgModule. En Angular 17+, c''est désormais le comportement par défaut. Résultat : une arborescence plus simple, du lazy loading plus naturel et une meilleure tree-shaking pour les bundles de production.', 'dave', '2025-03-15 09:00:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (3, 'Les Signals en Angular : révolution ou évolution ?', 'Les Signals introduits en Angular 16 apportent une réactivité fine-grained sans Zone.js. Fini le change detection global : seuls les composants affectés sont mis à jour. En Angular 17+, combinés avec les nouveaux control flows (@if, @for), ils rendent le code beaucoup plus lisible.', 'charlie', '2025-04-05 16:00:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (7, 'Pourquoi migrer de JavaScript à TypeScript ?', 'TypeScript apporte le typage statique, l''autocomplétion et la détection d''erreurs à la compilation. Pour les grandes équipes, c''est un gain énorme en maintenabilité. La courbe d''apprentissage est douce : on peut commencer avec du JS valide et ajouter les types progressivement.', 'bob', '2025-03-20 08:00:00');
+INSERT INTO posts (topic_id, title, content, author, created_at) VALUES (9, 'Docker pour les développeurs Java', 'Conteneuriser une application Spring Boot est simple : un Dockerfile de quelques lignes suffit. L''astuce est d''utiliser un build multi-stage pour garder une image finale légère. Avec Docker Compose, on orchestre facilement l''app + la base de données en local.', 'alice', '2025-04-10 13:00:00');
 
--- Comments (à compléter quand Comment.java aura ses champs content, author, post_id, created_at)
--- INSERT INTO comments (post_id, content, author, created_at) VALUES (1, 'Très bon article !', 'dave', '2025-03-11 08:00:00');
+-- Comments
+INSERT INTO comments (post_id, content, author, created_at) VALUES (1, 'Excellent article ! Les virtual threads m''ont vraiment convaincu de passer à Java 21.', 'bob', '2025-03-11 08:00:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (1, 'Le pattern matching for switch est ma feature préférée de cette version. Merci pour le résumé !', 'dave', '2025-03-11 14:00:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (2, 'Très bon article sur le GC. Tu as des benchmarks à partager entre G1GC et ZGC ?', 'alice', '2025-03-19 10:00:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (3, 'La migration javax -> jakarta nous a pris une journée complète mais ça valait le coup !', 'dave', '2025-03-13 09:00:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (5, 'Enfin on peut se débarrasser de NgModule ! C''était la complexité numéro 1 pour les débutants Angular.', 'alice', '2025-03-16 11:00:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (5, 'J''ai migré mon projet cette semaine, ça prend 2h mais le résultat est beaucoup plus propre.', 'bob', '2025-03-17 15:30:00');
+INSERT INTO comments (post_id, content, author, created_at) VALUES (6, 'Les Signals combinés avec takeUntilDestroyed c''est une combinaison parfaite.', 'dave', '2025-04-06 09:00:00');
