@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.dto.CreateCommentRequest;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
@@ -35,6 +36,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDto> getByPost(Long postId) {
         return commentRepository.findByPostIdOrderByCreatedAtAsc(postId).stream()
                 .map(this::toDto)
@@ -45,9 +47,9 @@ public class CommentService implements ICommentService {
     @Transactional
     public CommentDto create(Long postId, CreateCommentRequest request, String authorEmail) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Article non trouvé"));
         User author = userRepository.findByEmail(authorEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         Comment comment = new Comment();
         comment.setPost(post);
         comment.setContent(request.getContent());

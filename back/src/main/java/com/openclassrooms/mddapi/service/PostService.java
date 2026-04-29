@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
@@ -34,9 +35,10 @@ public class PostService implements IPostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDto> getFeed(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         return postRepository.findByTopicsOrderByCreatedAtDesc(user.getSubscriptions())
                 .stream()
                 .map(this::toDto)
@@ -44,9 +46,10 @@ public class PostService implements IPostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PostDto getById(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Article non trouvé"));
         return toDto(post);
     }
 
@@ -54,9 +57,9 @@ public class PostService implements IPostService {
     @Transactional
     public PostDto create(CreatePostRequest request, String authorEmail) {
         Topic topic = topicRepository.findById(request.getTopicId())
-                .orElseThrow(() -> new RuntimeException("Topic non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Thème non trouvé"));
         User author = userRepository.findByEmail(authorEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         Post post = new Post();
         post.setTopic(topic);
         post.setTitle(request.getTitle());

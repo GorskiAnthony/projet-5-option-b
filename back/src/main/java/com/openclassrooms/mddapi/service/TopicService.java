@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.mddapi.dto.TopicDto;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
@@ -27,9 +28,10 @@ public class TopicService implements ITopicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TopicDto> getTopics(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         return topicRepository.findAll().stream()
                 .map(t -> new TopicDto(t.getId(), t.getName(), t.getDescription(),
                         user.getSubscriptions().contains(t)))
@@ -40,9 +42,9 @@ public class TopicService implements ITopicService {
     @Transactional
     public void subscribe(Long topicId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Thème non trouvé"));
         user.getSubscriptions().add(topic);
         userRepository.save(user);
     }
@@ -51,9 +53,9 @@ public class TopicService implements ITopicService {
     @Transactional
     public void unsubscribe(Long topicId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
         Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new RuntimeException("Topic non trouvé"));
+                .orElseThrow(() -> new ResourceNotFoundException("Thème non trouvé"));
         user.getSubscriptions().remove(topic);
         userRepository.save(user);
     }
