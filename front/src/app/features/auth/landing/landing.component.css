@@ -8,9 +8,8 @@
   padding: 24px;
 }
 
-.landing__logo svg {
+.landing__logo img {
   width: 160px;
-  height: auto;
 }
 
 .landing__actions {
@@ -19,7 +18,7 @@
 }
 
 @media (max-width: 480px) {
-  .landing__logo svg {
+  .landing__logo img {
     width: 120px;
   }
 

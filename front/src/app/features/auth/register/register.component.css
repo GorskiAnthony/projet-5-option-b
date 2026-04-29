@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 40px 24px;
 }
 
 .auth-page__mobile-logo {
@@ -12,22 +12,23 @@
   margin-bottom: 32px;
 }
 
-.auth-page__mobile-logo svg {
+.auth-page__mobile-logo img {
   width: 100px;
-  height: auto;
+  margin: 0 auto;
 }
 
 .auth-card {
   position: relative;
   width: 100%;
   max-width: 400px;
+  padding-top: 8px;
 }
 
 .back-btn {
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--text);
   text-decoration: none;
   line-height: 1;
@@ -58,6 +59,12 @@
 }
 
 @media (max-width: 640px) {
+  .auth-page {
+    padding: 32px 20px;
+    justify-content: flex-start;
+    padding-top: 48px;
+  }
+
   .auth-page__mobile-logo {
     display: block;
   }
