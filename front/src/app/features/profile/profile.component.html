@@ -1,0 +1,42 @@
+<app-navbar />
+
+<main class="profile">
+  <section class="profile__section">
+    <h1 class="profile__title">Profil utilisateur</h1>
+
+    <form class="profile__form" [formGroup]="form" (ngSubmit)="onSave()">
+      <input class="form-input" type="text" formControlName="username" placeholder="Username" />
+      <input class="form-input" type="email" formControlName="email" placeholder="email@email.fr" />
+      <input class="form-input" type="password" formControlName="password" placeholder="Mot de passe" />
+
+      @if (error()) {
+        <p class="profile__error">{{ error() }}</p>
+      }
+      @if (saved()) {
+        <p class="profile__success">Profil sauvegardé !</p>
+      }
+
+      <button type="submit" class="btn btn--primary btn--full">Sauvegarder</button>
+    </form>
+  </section>
+
+  <hr class="profile__divider" />
+
+  <section class="profile__section">
+    <h2 class="profile__subtitle">Abonnements</h2>
+
+    @if (subscriptions().length === 0) {
+      <p class="profile__empty">Vous n'êtes abonné à aucun thème.</p>
+    } @else {
+      <div class="profile__subs-grid">
+        @for (topic of subscriptions(); track topic.id) {
+          <div class="topic-card">
+            <h3 class="topic-card__title">{{ topic.name }}</h3>
+            <p class="topic-card__description">{{ topic.description }}</p>
+            <button class="btn btn--unsubscribe" (click)="unsubscribe(topic)">Se désabonner</button>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</main>
