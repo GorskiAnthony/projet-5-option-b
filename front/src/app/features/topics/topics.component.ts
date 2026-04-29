@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { TopicService } from '../../core/services/topic.service';
 import { Topic } from '../../shared/models/topic.model';
@@ -11,10 +11,10 @@ import { Topic } from '../../shared/models/topic.model';
   styleUrl: './topics.component.css'
 })
 export class TopicsComponent implements OnInit {
+  private topicService = inject(TopicService);
+
   topics = signal<Topic[]>([]);
   loading = signal(true);
-
-  constructor(private topicService: TopicService) {}
 
   ngOnInit() {
     this.topicService.getAll().subscribe({

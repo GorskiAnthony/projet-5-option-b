@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { PostCardComponent } from '../../shared/components/post-card/post-card.component';
@@ -13,11 +13,11 @@ import { Post } from '../../shared/models/post.model';
   styleUrl: './feed.component.css'
 })
 export class FeedComponent implements OnInit {
+  private postService = inject(PostService);
+
   posts = signal<Post[]>([]);
   loading = signal(true);
   sortDesc = signal(true);
-
-  constructor(private postService: PostService) {}
 
   ngOnInit() {
     this.postService.getFeed().subscribe({
