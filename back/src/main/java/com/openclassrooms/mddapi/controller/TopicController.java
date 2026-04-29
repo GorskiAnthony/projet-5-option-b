@@ -10,7 +10,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.service.ITopicService;
 
 @RestController
-@RequestMapping("/topic")
+@RequestMapping("/api/topics")
 public class TopicController {
 	
 	private ITopicService topicService;
