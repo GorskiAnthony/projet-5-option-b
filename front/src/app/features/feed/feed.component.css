@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 28px;
+  gap: 12px;
 }
 
 .sort-btn {
@@ -21,6 +22,7 @@
   align-items: center;
   gap: 4px;
   transition: color 0.15s;
+  white-space: nowrap;
 }
 
 .sort-btn:hover {
@@ -44,9 +46,16 @@
   padding: 48px 0;
 }
 
+@media (max-width: 768px) {
+  .feed {
+    padding: 24px 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .feed__grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .feed {

@@ -58,12 +58,27 @@
   background: #e5e7eb;
 }
 
+@media (max-width: 768px) {
+  .topics {
+    padding: 24px 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .topics__grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .topics {
     padding: 20px 16px;
+  }
+
+  .btn--subscribed {
+    width: 100%;
+  }
+
+  .topic-card .btn--primary {
+    width: 100%;
   }
 }
