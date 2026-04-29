@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import com.openclassrooms.mddapi.dto.UpdateProfileRequest;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.model.User;
@@ -30,7 +32,7 @@ public class UserController {
 
     @PutMapping("/me")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal User user,
-                                           @RequestBody UpdateProfileRequest request) {
+                                           @Valid @RequestBody UpdateProfileRequest request) {
         try {
             return ResponseEntity.ok(userService.updateProfile(user.getEmail(), request));
         } catch (RuntimeException e) {

@@ -1,8 +1,17 @@
 package com.openclassrooms.mddapi.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+
 public class UpdateProfileRequest {
+
+    @Size(min = 3, max = 30, message = "Le nom doit contenir entre 3 et 30 caractères")
     private String username;
+
+    @Email(message = "Format d'email invalide")
     private String email;
+
+    @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
     private String password;
 
     public String getUsername() { return username; }

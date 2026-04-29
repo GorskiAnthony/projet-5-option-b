@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.model.User;
@@ -42,7 +44,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> create(@RequestBody CreatePostRequest request,
+    public ResponseEntity<PostDto> create(@Valid @RequestBody CreatePostRequest request,
                                           @AuthenticationPrincipal User user) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
