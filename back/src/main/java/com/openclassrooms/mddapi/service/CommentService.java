@@ -53,13 +53,13 @@ public class CommentService implements ICommentService {
         Comment comment = new Comment();
         comment.setPost(post);
         comment.setContent(request.getContent());
-        comment.setAuthor(author.getRealUsername());
+        comment.setAuthor(author);
         comment.setCreatedAt(LocalDateTime.now());
         return toDto(commentRepository.save(comment));
     }
 
     private CommentDto toDto(Comment c) {
-        return new CommentDto(c.getId(), c.getContent(), c.getAuthor(),
+        return new CommentDto(c.getId(), c.getContent(), c.getAuthor().getRealUsername(),
                 c.getPost().getId(), c.getCreatedAt());
     }
 }

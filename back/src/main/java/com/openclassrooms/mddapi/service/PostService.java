@@ -64,7 +64,7 @@ public class PostService implements IPostService {
         post.setTopic(topic);
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        post.setAuthor(author.getRealUsername());
+        post.setAuthor(author);
         post.setCreatedAt(LocalDateTime.now());
         return toDto(postRepository.save(post));
     }
@@ -74,7 +74,7 @@ public class PostService implements IPostService {
                 post.getId(),
                 post.getTitle(),
                 post.getContent(),
-                post.getAuthor(),
+                post.getAuthor().getRealUsername(),
                 post.getTopic().getId(),
                 post.getTopic().getName(),
                 post.getCreatedAt()
