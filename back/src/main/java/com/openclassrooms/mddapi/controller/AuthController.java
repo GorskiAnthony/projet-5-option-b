@@ -39,15 +39,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
-        try {
-            User user = userService.register(request);
-            String token = jwtUtils.generateToken(user.getEmail());
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new AuthResponse(token, userService.toDto(user)));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
+        User user = userService.register(request);
+        String token = jwtUtils.generateToken(user.getEmail());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new AuthResponse(token, userService.toDto(user)));
     }
 
     @PostMapping("/login")

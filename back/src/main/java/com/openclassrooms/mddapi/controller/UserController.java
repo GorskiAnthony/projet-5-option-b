@@ -35,12 +35,8 @@ public class UserController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal User user,
-                                           @Valid @RequestBody UpdateProfileRequest request) {
-        try {
-            return ResponseEntity.ok(userService.updateProfile(user.getEmail(), request));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<UserDto> updateProfile(@AuthenticationPrincipal User user,
+                                                 @Valid @RequestBody UpdateProfileRequest request) {
+        return ResponseEntity.ok(userService.updateProfile(user.getEmail(), request));
     }
 }

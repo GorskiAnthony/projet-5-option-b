@@ -40,21 +40,13 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(postService.getById(id));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(postService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<PostDto> create(@Valid @RequestBody CreatePostRequest request,
                                           @AuthenticationPrincipal User user) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(postService.create(request, user.getEmail()));
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(postService.create(request, user.getEmail()));
     }
 }
