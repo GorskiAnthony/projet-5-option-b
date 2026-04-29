@@ -28,8 +28,8 @@ public class PostController {
     }
 
     @GetMapping("/feed")
-    public List<PostDto> getFeed() {
-        return postService.getFeed();
+    public List<PostDto> getFeed(@AuthenticationPrincipal User user) {
+        return postService.getFeed(user.getEmail());
     }
 
     @GetMapping("/{id}")

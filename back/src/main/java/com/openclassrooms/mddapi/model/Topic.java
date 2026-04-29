@@ -30,4 +30,14 @@ public class Topic {
 
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Topic)) return false;
+		return id != null && id.equals(((Topic) o).id);
+	}
+
+	@Override
+	public int hashCode() { return getClass().hashCode(); }
 }

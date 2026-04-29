@@ -7,7 +7,7 @@ import com.openclassrooms.mddapi.dto.PostDto;
 
 public interface IPostService {
 
-    List<PostDto> getFeed();
+    List<PostDto> getFeed(String userEmail);
 
     PostDto getById(Long id);
 

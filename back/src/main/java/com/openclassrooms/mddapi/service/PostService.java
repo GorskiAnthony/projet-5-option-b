@@ -29,8 +29,11 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<PostDto> getFeed() {
+    public List<PostDto> getFeed(String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         return postRepository.findAll().stream()
+                .filter(p -> user.getSubscriptions().contains(p.getTopic()))
                 .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
                 .map(this::toDto)
                 .toList();
