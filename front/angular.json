@@ -70,7 +70,7 @@
               "buildTarget": "mdd-client:build:production"
             },
             "development": {
-              "buildTarget": "mdd-client:build:production"
+              "buildTarget": "mdd-client:build:development"
             }
           },
           "defaultConfiguration": "development"
