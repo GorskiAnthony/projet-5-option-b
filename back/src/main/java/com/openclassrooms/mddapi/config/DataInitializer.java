@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.config;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -14,6 +16,8 @@ import com.openclassrooms.mddapi.repository.UserRepository;
 @Component
 @Profile("!test")
 public class DataInitializer implements ApplicationRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,7 +36,7 @@ public class DataInitializer implements ApplicationRunner {
             user.setPassword(passwordEncoder.encode("password"));
             user.setCreatedAt(LocalDateTime.now());
             userRepository.save(user);
-            System.out.println("✓ Utilisateur de test créé : user@mdd.com / password");
+            log.info("Utilisateur de test créé : user@mdd.com");
         }
     }
 }
