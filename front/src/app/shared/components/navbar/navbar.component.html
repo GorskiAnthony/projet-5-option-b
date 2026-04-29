@@ -1,0 +1,38 @@
+<nav class="navbar">
+  <a class="navbar__brand" routerLink="/feed">
+    <svg class="navbar__logo" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" aria-label="MDD">
+      <rect x="0" y="0" width="100" height="58" rx="14" fill="#7B61FF"/>
+      <polygon points="20,58 8,76 34,58" fill="#7B61FF"/>
+      <text x="50" y="34" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="22" font-weight="bold" font-family="Arial,sans-serif">MDD</text>
+    </svg>
+  </a>
+
+  <!-- Desktop links -->
+  <div class="navbar__desktop">
+    <button class="navbar__logout" (click)="logout()">Se déconnecter</button>
+    <a class="navbar__link" routerLink="/feed" routerLinkActive="active">Articles</a>
+    <a class="navbar__link" routerLink="/topics" routerLinkActive="active">Thèmes</a>
+    <a class="navbar__user-btn" routerLink="/profile" aria-label="Profil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Mobile burger -->
+  <button class="navbar__burger" (click)="toggleMenu()" [class.open]="menuOpen()" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile dropdown -->
+  @if (menuOpen()) {
+    <div class="navbar__mobile-menu">
+      <a class="navbar__mobile-link" routerLink="/feed" (click)="closeMenu()">Articles</a>
+      <a class="navbar__mobile-link" routerLink="/topics" (click)="closeMenu()">Thèmes</a>
+      <button class="navbar__mobile-link navbar__mobile-logout" (click)="logout()">Se déconnecter</button>
+    </div>
+  }
+</nav>
