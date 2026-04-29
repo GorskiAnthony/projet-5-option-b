@@ -39,6 +39,8 @@ class CommentServiceTest {
     private Post post;
     private User user;
 
+    private User userBob;
+
     @BeforeEach
     void setUp() {
         post = new Post();
@@ -49,14 +51,19 @@ class CommentServiceTest {
         user.setId(1L);
         user.setEmail("alice@example.com");
         user.setUsername("alice");
+
+        userBob = new User();
+        userBob.setId(2L);
+        userBob.setEmail("bob@example.com");
+        userBob.setUsername("bob");
     }
 
     @Test
     @DisplayName("getByPost — doit retourner les commentaires mappés dans l'ordre chronologique")
     void getByPost_shouldReturnMappedCommentsInChronologicalOrder() {
         // Arrange
-        Comment c1 = buildComment(1L, "Premier", "alice", LocalDateTime.of(2024, 1, 1, 10, 0));
-        Comment c2 = buildComment(2L, "Deuxième", "bob",  LocalDateTime.of(2024, 1, 2, 10, 0));
+        Comment c1 = buildComment(1L, "Premier", user,    LocalDateTime.of(2024, 1, 1, 10, 0));
+        Comment c2 = buildComment(2L, "Deuxième", userBob, LocalDateTime.of(2024, 1, 2, 10, 0));
         when(commentRepository.findByPostIdOrderByCreatedAtAsc(1L)).thenReturn(List.of(c1, c2));
 
         // Act
@@ -88,7 +95,7 @@ class CommentServiceTest {
         CreateCommentRequest req = new CreateCommentRequest();
         req.setContent("Super article !");
 
-        Comment saved = buildComment(10L, "Super article !", "alice", LocalDateTime.now());
+        Comment saved = buildComment(10L, "Super article !", user, LocalDateTime.now());
 
         when(postRepository.findById(1L)).thenReturn(Optional.of(post));
         when(userRepository.findByEmail("alice@example.com")).thenReturn(Optional.of(user));
@@ -114,10 +121,10 @@ class CommentServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> commentService.create(99L, req, "alice@example.com"))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Post non trouvé");
+                .hasMessageContaining("Article non trouvé");
     }
 
-    private Comment buildComment(Long id, String content, String author, LocalDateTime createdAt) {
+    private Comment buildComment(Long id, String content, User author, LocalDateTime createdAt) {
         Comment c = new Comment();
         c.setId(id);
         c.setContent(content);

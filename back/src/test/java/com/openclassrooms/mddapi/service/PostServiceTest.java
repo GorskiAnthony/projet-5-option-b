@@ -58,7 +58,7 @@ class PostServiceTest {
         post.setId(1L);
         post.setTitle("Mon article");
         post.setContent("Contenu");
-        post.setAuthor("alice");
+        post.setAuthor(user);
         post.setTopic(topic);
         post.setCreatedAt(LocalDateTime.now());
     }
@@ -114,7 +114,7 @@ class PostServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> postService.getById(99L))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Post non trouvé");
+                .hasMessageContaining("Article non trouvé");
     }
 
     @Test
@@ -150,6 +150,6 @@ class PostServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> postService.create(req, "alice@example.com"))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Topic non trouvé");
+                .hasMessageContaining("Thème non trouvé");
     }
 }
