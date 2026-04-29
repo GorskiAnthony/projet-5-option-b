@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:9000/api'
+  apiUrl: 'https://your-api-domain.com/api' // À remplacer par l'URL réelle avant déploiement
 };
