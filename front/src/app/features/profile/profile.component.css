@@ -106,12 +106,27 @@
   color: #dc2626;
 }
 
+@media (max-width: 768px) {
+  .profile {
+    padding: 24px 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .profile {
     padding: 20px 16px;
   }
 
+  .profile__form {
+    max-width: 100%;
+  }
+
   .profile__subs-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .btn--unsubscribe {
+    width: 100%;
   }
 }
