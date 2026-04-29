@@ -24,7 +24,7 @@ public interface IPostService {
      *
      * @param id identifiant de l'article
      * @return {@link PostDto} correspondant
-     * @throws RuntimeException si l'article n'existe pas
+     * @throws com.openclassrooms.mddapi.exception.ResourceNotFoundException si l'article n'existe pas
      */
     PostDto getById(Long id);
 

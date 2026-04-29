@@ -15,7 +15,7 @@ public interface IUserService {
      *
      * @param request données d'inscription
      * @return {@link User} créé
-     * @throws RuntimeException si l'email ou le nom d'utilisateur est déjà pris
+     * @throws IllegalArgumentException si l'email ou le nom d'utilisateur est déjà pris
      */
     User register(RegisterRequest request);
 

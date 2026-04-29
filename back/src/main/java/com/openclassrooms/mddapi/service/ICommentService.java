@@ -25,7 +25,7 @@ public interface ICommentService {
      * @param request     contenu du commentaire
      * @param authorEmail email de l'auteur authentifié
      * @return {@link CommentDto} du commentaire créé
-     * @throws RuntimeException si l'article ou l'auteur n'existe pas
+     * @throws com.openclassrooms.mddapi.exception.ResourceNotFoundException si l'article ou l'auteur n'existe pas
      */
     CommentDto create(Long postId, CreateCommentRequest request, String authorEmail);
 }

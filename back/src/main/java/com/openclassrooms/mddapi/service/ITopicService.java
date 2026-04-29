@@ -22,7 +22,7 @@ public interface ITopicService {
      *
      * @param topicId   identifiant du topic
      * @param userEmail email de l'utilisateur
-     * @throws RuntimeException si le topic ou l'utilisateur n'existe pas
+     * @throws com.openclassrooms.mddapi.exception.ResourceNotFoundException si le topic ou l'utilisateur n'existe pas
      */
     void subscribe(Long topicId, String userEmail);
 
@@ -31,7 +31,7 @@ public interface ITopicService {
      *
      * @param topicId   identifiant du topic
      * @param userEmail email de l'utilisateur
-     * @throws RuntimeException si le topic ou l'utilisateur n'existe pas
+     * @throws com.openclassrooms.mddapi.exception.ResourceNotFoundException si le topic ou l'utilisateur n'existe pas
      */
     void unsubscribe(Long topicId, String userEmail);
 }
