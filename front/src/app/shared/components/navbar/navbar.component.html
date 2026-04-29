@@ -22,13 +22,22 @@
     <span></span>
     <span></span>
   </button>
-
-  <!-- Mobile dropdown -->
-  @if (menuOpen()) {
-    <div class="navbar__mobile-menu">
-      <a class="navbar__mobile-link" routerLink="/feed" (click)="closeMenu()">Articles</a>
-      <a class="navbar__mobile-link" routerLink="/topics" (click)="closeMenu()">Thèmes</a>
-      <button class="navbar__mobile-link navbar__mobile-logout" (click)="logout()">Se déconnecter</button>
-    </div>
-  }
 </nav>
+
+<!-- Sidebar mobile -->
+@if (menuOpen()) {
+  <div class="sidebar-overlay" (click)="closeMenu()"></div>
+  <aside class="sidebar">
+    <nav class="sidebar__nav">
+      <button class="sidebar__item sidebar__logout" (click)="logout()">Se déconnecter</button>
+      <a class="sidebar__item" routerLink="/feed" routerLinkActive="active" (click)="closeMenu()">Articles</a>
+      <a class="sidebar__item" routerLink="/topics" routerLinkActive="active" (click)="closeMenu()">Thèmes</a>
+    </nav>
+    <a class="sidebar__user" routerLink="/profile" (click)="closeMenu()" aria-label="Profil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+    </a>
+  </aside>
+}
