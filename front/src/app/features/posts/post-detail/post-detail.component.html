@@ -1,0 +1,51 @@
+<app-navbar />
+
+<main class="post-detail">
+  @if (loading()) {
+    <p class="post-detail__empty">Chargement...</p>
+  } @else if (post(); as post) {
+    <a class="back-btn" routerLink="/feed">&#8592;</a>
+
+    <h1 class="post-detail__title">{{ post.title }}</h1>
+
+    <div class="post-detail__meta">
+      <span>{{ post.createdAt | slice:0:10 }}</span>
+      <span>{{ post.author }}</span>
+      <span>{{ post.topicName }}</span>
+    </div>
+
+    <p class="post-detail__content">{{ post.content }}</p>
+
+    <hr class="post-detail__divider" />
+
+    <section class="comments">
+      <h2 class="comments__title">Commentaires</h2>
+
+      <div class="comments__list">
+        @for (comment of comments(); track comment.id) {
+          <div class="comment">
+            <span class="comment__author">{{ comment.author }}</span>
+            <p class="comment__content">{{ comment.content }}</p>
+          </div>
+        } @empty {
+          <p class="comments__empty">Aucun commentaire pour l'instant.</p>
+        }
+      </div>
+
+      <div class="comments__form">
+        <textarea
+          class="comments__textarea"
+          [(ngModel)]="newComment"
+          placeholder="Écrivez ici votre commentaire"
+          rows="3"
+        ></textarea>
+        <button class="comments__send" (click)="sendComment()" [disabled]="!newComment.trim()" aria-label="Envoyer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+  }
+</main>
