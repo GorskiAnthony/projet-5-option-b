@@ -20,6 +20,13 @@ body {
   color: var(--text);
   background: var(--bg);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .btn {
@@ -89,6 +96,7 @@ body {
   color: var(--text);
   outline: none;
   transition: border-color 0.2s;
+  background: white;
 }
 
 .form-input:focus {
