@@ -124,9 +124,21 @@ describe('AuthService', () => {
   });
 
   describe('isLoggedIn', () => {
-    it('should return true when a token exists in localStorage', () => {
-      localStorage.setItem('mdd_token', 'some-token');
+    function buildMockJwt(exp: number): string {
+      const payload = btoa(JSON.stringify({ exp }));
+      return `header.${payload}.signature`;
+    }
+
+    it('should return true when token is present and not expired', () => {
+      const token = buildMockJwt(Math.floor(Date.now() / 1000) + 3600);
+      localStorage.setItem('mdd_token', token);
       expect(service.isLoggedIn()).toBeTrue();
+    });
+
+    it('should return false when token is expired', () => {
+      const token = buildMockJwt(1); // exp en 1970 — toujours expiré
+      localStorage.setItem('mdd_token', token);
+      expect(service.isLoggedIn()).toBeFalse();
     });
 
     it('should return false when no token is in localStorage', () => {
