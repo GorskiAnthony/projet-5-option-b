@@ -33,9 +33,8 @@ public class PostService implements IPostService {
     public List<PostDto> getFeed(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        return postRepository.findAll().stream()
-                .filter(p -> user.getSubscriptions().contains(p.getTopic()))
-                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+        return postRepository.findByTopicsOrderByCreatedAtDesc(user.getSubscriptions())
+                .stream()
                 .map(this::toDto)
                 .toList();
     }
