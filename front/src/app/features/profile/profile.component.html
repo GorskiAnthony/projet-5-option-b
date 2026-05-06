@@ -8,6 +8,9 @@
       <input class="form-input" type="text" formControlName="username" placeholder="Username" />
       <input class="form-input" type="email" formControlName="email" placeholder="email@email.fr" />
       <input class="form-input" type="password" formControlName="password" placeholder="Mot de passe" />
+      @if (form.get('password')?.hasError('passwordStrength') && form.get('password')?.touched) {
+        <p class="profile__error">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+      }
 
       @if (error()) {
         <p class="profile__error">{{ error() }}</p>

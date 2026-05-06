@@ -39,6 +39,9 @@
           formControlName="password"
           autocomplete="new-password"
         />
+        @if (form.get('password')?.hasError('pattern') && form.get('password')?.touched) {
+          <p class="auth-error">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+        }
       </div>
 
       @if (error()) {

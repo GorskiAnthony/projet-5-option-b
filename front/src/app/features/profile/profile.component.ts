@@ -24,7 +24,12 @@ export class ProfileComponent implements OnInit {
   form = this.fb.group({
     username: ['', [Validators.minLength(3), Validators.maxLength(30)]],
     email: ['', [Validators.email]],
-    password: ['', [Validators.minLength(8)]]
+    password: ['', [(control) => {
+      if (!control.value) return null;
+      return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(control.value)
+        ? null
+        : { passwordStrength: true };
+    }]]
   });
 
   ngOnInit() {
