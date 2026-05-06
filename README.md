@@ -486,18 +486,50 @@ Pour les erreurs de validation (`400`), les champs incorrects sont détaillés :
 
 ### Modèle entité-relation (simplifié)
 
-```
-users ──────────────────────── user_subscriptions ──── topics
-  │  (id, username, email,      (user_id, topic_id)      │  (id, name, description)
-  │   password, created_at)                               │
-  │                                                       │
-  └─── posts ──────────────────────────────── ManyToOne (topic)
-         │  (post_id, topic_id, title,
-         │   content, author, created_at)
-         │
-         └─── comments
-                (comment_id, post_id, content,
-                 author, created_at)
+```mermaid
+erDiagram
+    users {
+        BIGINT id PK
+        VARCHAR username
+        VARCHAR email
+        VARCHAR password
+        DATETIME created_at
+    }
+
+    topics {
+        BIGINT id PK
+        VARCHAR name
+        TEXT description
+    }
+
+    posts {
+        BIGINT post_id PK
+        BIGINT topic_id FK
+        BIGINT user_id FK
+        VARCHAR title
+        TEXT content
+        DATETIME created_at
+    }
+
+    comments {
+        BIGINT comment_id PK
+        BIGINT post_id FK
+        BIGINT user_id FK
+        TEXT content
+        DATETIME created_at
+    }
+
+    user_subscriptions {
+        BIGINT user_id FK
+        BIGINT topic_id FK
+    }
+
+    users ||--o{ posts : "écrit"
+    users ||--o{ comments : "écrit"
+    users ||--o{ user_subscriptions : "a"
+    topics ||--o{ posts : "contient"
+    topics ||--o{ user_subscriptions : "reçoit"
+    posts ||--o{ comments : "reçoit"
 ```
 
 ### Table `users`
