@@ -234,7 +234,7 @@ L'application est disponible sur `http://localhost:4200`.
 | ---------- | ------ | --------------------------------- |
 | `username` | string | Obligatoire, 3–30 caractères      |
 | `email`    | string | Obligatoire, format email valide  |
-| `password` | string | Obligatoire, 8 caractères minimum |
+| `password` | string | Obligatoire, 8 caractères minimum, doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial |
 
 **Réponse `201 Created` :**
 
@@ -308,7 +308,7 @@ L'application est disponible sur `http://localhost:4200`.
 | ---------- | -------------------------------- |
 | `username` | 3–30 caractères (si fourni)      |
 | `email`    | Format email valide (si fourni)  |
-| `password` | 8 caractères minimum (si fourni) |
+| `password` | 8 caractères minimum, majuscule + minuscule + chiffre + caractère spécial (si fourni) |
 
 **Réponse `200 OK` :** UserDto mis à jour
 
@@ -556,9 +556,9 @@ erDiagram
 | ------------ | ------------ | -------------------- |
 | `post_id`    | BIGINT       | PK, AUTO_INCREMENT   |
 | `topic_id`   | BIGINT       | FK → topics.topic_id |
+| `user_id`    | BIGINT       | FK → users.id        |
 | `title`      | VARCHAR(255) | NOT NULL             |
 | `content`    | TEXT         | NOT NULL             |
-| `author`     | VARCHAR(255) | NOT NULL (username)  |
 | `created_at` | DATETIME     | NOT NULL             |
 
 ### Table `comments`
@@ -567,8 +567,8 @@ erDiagram
 | ------------ | ------------ | ------------------- |
 | `comment_id` | BIGINT       | PK, AUTO_INCREMENT  |
 | `post_id`    | BIGINT       | FK → posts.post_id  |
+| `user_id`    | BIGINT       | FK → users.id       |
 | `content`    | TEXT         | NOT NULL            |
-| `author`     | VARCHAR(255) | NOT NULL (username) |
 | `created_at` | DATETIME     | NOT NULL            |
 
 ### Table `user_subscriptions`
@@ -577,8 +577,6 @@ erDiagram
 | ---------- | ------ | -------------------- |
 | `user_id`  | BIGINT | FK → users.id        |
 | `topic_id` | BIGINT | FK → topics.topic_id |
-
-> **Remarque :** Le champ `author` dans `posts` et `comments` stocke le `username` de l'utilisateur au moment de la publication. Cette dénormalisation intentionnelle préserve l'historique si l'utilisateur change de nom.
 
 ---
 
@@ -608,6 +606,36 @@ Le rapport HTML de couverture est généré dans :
 
 Les DTOs et modèles sont exclus de la couverture JaCoCo (POJO sans logique à tester).
 
+**Résultats (dernière exécution) : 28/28 tests — BUILD SUCCESS**
+
+| Métrique     | Couvert | Total | Taux  |
+| ------------ | ------- | ----- | ----- |
+| Instructions | 913     | 1060  | 86 %  |
+| Branches     | 20      | 28    | 71 %  |
+| Lignes       | 227     | 250   | 91 %  |
+| Méthodes     | 65      | 85    | 76 %  |
+
+**Couverture par classe :**
+
+| Classe                  | Instructions |
+| ----------------------- | ------------ |
+| `AuthController`        | 100 %        |
+| `JwtFilter`             | 100 %        |
+| `JwtAuthEntryPoint`     | 100 %        |
+| `SecurityConfig`        | 100 %        |
+| `DataInitializer`       | 100 %        |
+| `ResourceNotFoundException` | 100 %    |
+| `PostService`           | 96 %         |
+| `CommentService`        | 94 %         |
+| `UserService`           | 92 %         |
+| `JwtUtils`              | 88 %         |
+| `TopicService`          | 79 %         |
+| `GlobalExceptionHandler`| 52 %         |
+| `PostController`        | 43 %         |
+| `TopicController`       | 40 %         |
+| `CommentController`     | 32 %         |
+| `UserController`        | 32 %         |
+
 ### Frontend — Tests unitaires
 
 ```bash
@@ -622,6 +650,15 @@ npm test -- --watch=false --code-coverage
 
 Le rapport HTML est généré dans :
 `front/coverage/mdd-client/index.html`
+
+**Résultats (dernière exécution) : 129/129 tests — TOTAL: SUCCESS**
+
+| Métrique   | Couvert | Total | Taux    |
+| ---------- | ------- | ----- | ------- |
+| Statements | 197     | 199   | 98.99 % |
+| Branches   | 18      | 19    | 94.73 % |
+| Functions  | 73      | 74    | 98.64 % |
+| Lines      | 169     | 171   | 98.83 % |
 
 ---
 
@@ -691,7 +728,7 @@ Le rapport HTML est généré dans :
 
 ### Comment créer un compte ?
 
-Cliquez sur **S'inscrire** depuis la page d'accueil. Remplissez votre nom d'utilisateur, votre email et un mot de passe d'au moins 8 caractères. Vous êtes automatiquement connecté après l'inscription.
+Cliquez sur **S'inscrire** depuis la page d'accueil. Remplissez votre nom d'utilisateur, votre email et un mot de passe d'au moins 8 caractères contenant une majuscule, une minuscule, un chiffre et un caractère spécial. Vous êtes automatiquement connecté après l'inscription.
 
 ### Comment me connecter ?
 

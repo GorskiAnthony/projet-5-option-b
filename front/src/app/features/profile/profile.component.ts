@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { UserService } from '../../core/services/user.service';
 import { TopicService } from '../../core/services/topic.service';
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   form = this.fb.group({
     username: ['', [Validators.minLength(3), Validators.maxLength(30)]],
     email: ['', [Validators.email]],
-    password: ['', [(control) => {
+    password: ['', [(control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
       return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(control.value)
         ? null

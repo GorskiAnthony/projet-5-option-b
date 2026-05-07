@@ -35,27 +35,27 @@ describe('RegisterComponent', () => {
     });
 
     it('should require a valid email address', () => {
-      component.form.patchValue({ username: 'john', email: 'not-an-email', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'not-an-email', password: 'Test1234!' });
       expect(component.form.get('email')?.invalid).toBeTrue();
     });
 
     it('should accept a valid email address', () => {
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
       expect(component.form.get('email')?.valid).toBeTrue();
     });
 
-    it('should require password of at least 8 characters', () => {
+    it('should reject a password that does not meet security requirements', () => {
       component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'short' });
       expect(component.form.get('password')?.invalid).toBeTrue();
     });
 
-    it('should accept a password with exactly 8 characters', () => {
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: '12345678' });
+    it('should accept a password that meets all security requirements (8 chars, maj, min, chiffre, spécial)', () => {
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test12!!' });
       expect(component.form.get('password')?.valid).toBeTrue();
     });
 
     it('should be valid when all fields pass validation', () => {
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
       expect(component.form.valid).toBeTrue();
     });
   });
@@ -68,21 +68,21 @@ describe('RegisterComponent', () => {
 
     it('should call auth.register with form values on valid submission', () => {
       authServiceSpy.register.and.returnValue(of({} as any));
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
 
       expect(authServiceSpy.register).toHaveBeenCalledWith({
         username: 'john',
         email: 'john@example.com',
-        password: 'password123'
+        password: 'Test1234!'
       });
     });
 
     it('should navigate to /feed on successful registration', fakeAsync(() => {
       authServiceSpy.register.and.returnValue(of({} as any));
       const navigateSpy = spyOn(router, 'navigate');
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
       tick();
@@ -92,7 +92,7 @@ describe('RegisterComponent', () => {
 
     it('should set the error signal on registration failure', fakeAsync(() => {
       authServiceSpy.register.and.returnValue(throwError(() => new Error('Conflict')));
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
       tick();
@@ -102,7 +102,7 @@ describe('RegisterComponent', () => {
 
     it('should reset loading to false on registration failure', fakeAsync(() => {
       authServiceSpy.register.and.returnValue(throwError(() => new Error('Conflict')));
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
       tick();
@@ -113,7 +113,7 @@ describe('RegisterComponent', () => {
     it('should clear any previous error before a new submission', () => {
       authServiceSpy.register.and.returnValue(of({} as any));
       component.error.set('Previous error');
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'password123' });
+      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
 

@@ -39,7 +39,7 @@ class AuthControllerIntegrationTest {
     void register_shouldReturn201AndJwt() {
         // Arrange
         String body = """
-                {"username":"testuser","email":"testuser@mdd.com","password":"password123"}
+                {"username":"testuser","email":"testuser@mdd.com","password":"Test1234!"}
                 """;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -65,7 +65,7 @@ class AuthControllerIntegrationTest {
     void login_shouldReturn200AndJwt_whenCredentialsAreValid() {
         // Arrange
         String body = """
-                {"identifier":"testuser@mdd.com","password":"password123"}
+                {"identifier":"testuser@mdd.com","password":"Test1234!"}
                 """;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
