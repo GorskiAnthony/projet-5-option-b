@@ -3,6 +3,7 @@ import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { AuthResponse } from '../../../shared/models/user.model';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -57,7 +58,7 @@ describe('LoginComponent', () => {
     });
 
     it('should call auth.login with form values on valid submission', () => {
-      authServiceSpy.login.and.returnValue(of({} as any));
+      authServiceSpy.login.and.returnValue(of({} as AuthResponse));
       component.form.patchValue({ identifier: 'john', password: 'secret123' });
 
       component.onSubmit();
@@ -66,7 +67,7 @@ describe('LoginComponent', () => {
     });
 
     it('should navigate to /feed on successful login', fakeAsync(() => {
-      authServiceSpy.login.and.returnValue(of({} as any));
+      authServiceSpy.login.and.returnValue(of({} as AuthResponse));
       const navigateSpy = spyOn(router, 'navigate');
       component.form.patchValue({ identifier: 'john', password: 'secret123' });
 
@@ -97,7 +98,7 @@ describe('LoginComponent', () => {
     }));
 
     it('should clear any previous error before a new submission', () => {
-      authServiceSpy.login.and.returnValue(of({} as any));
+      authServiceSpy.login.and.returnValue(of({} as AuthResponse));
       component.error.set('Previous error');
       component.form.patchValue({ identifier: 'john', password: 'secret123' });
 

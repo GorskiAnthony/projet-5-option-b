@@ -65,7 +65,7 @@ describe('TopicsComponent', () => {
 
   describe('toggleSubscription', () => {
     it('should call TopicService.subscribe when the topic is not subscribed', () => {
-      topicServiceSpy.subscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.subscribe.and.returnValue(of(void 0));
       const unsubscribedTopic = { ...mockTopics[0] }; // subscribed: false
 
       component.toggleSubscription(unsubscribedTopic);
@@ -74,7 +74,7 @@ describe('TopicsComponent', () => {
     });
 
     it('should call TopicService.unsubscribe when the topic is already subscribed', () => {
-      topicServiceSpy.unsubscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.unsubscribe.and.returnValue(of(void 0));
       const subscribedTopic = { ...mockTopics[1] }; // subscribed: true
 
       component.toggleSubscription(subscribedTopic);
@@ -83,7 +83,7 @@ describe('TopicsComponent', () => {
     });
 
     it('should set subscribed to true after subscribing', () => {
-      topicServiceSpy.subscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.subscribe.and.returnValue(of(void 0));
       component.topics.set([...mockTopics]);
       const unsubscribedTopic = { ...mockTopics[0] }; // subscribed: false
 
@@ -93,7 +93,7 @@ describe('TopicsComponent', () => {
     });
 
     it('should set subscribed to false after unsubscribing', () => {
-      topicServiceSpy.unsubscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.unsubscribe.and.returnValue(of(void 0));
       component.topics.set([...mockTopics]);
       const subscribedTopic = { ...mockTopics[1] }; // subscribed: true
 
@@ -103,7 +103,7 @@ describe('TopicsComponent', () => {
     });
 
     it('should not alter other topics in the list', () => {
-      topicServiceSpy.subscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.subscribe.and.returnValue(of(void 0));
       component.topics.set([...mockTopics]);
       const unsubscribedTopic = { ...mockTopics[0] };
 

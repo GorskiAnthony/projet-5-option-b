@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { authGuard } from './auth.guard';
 import { AuthService } from '../services/auth.service';
 
@@ -24,7 +23,7 @@ describe('authGuard', () => {
     authServiceSpy.isLoggedIn.and.returnValue(true);
 
     const result = TestBed.runInInjectionContext(() =>
-      authGuard({} as any, {} as any)
+      authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
     );
 
     expect(result).toBeTrue();
@@ -34,7 +33,7 @@ describe('authGuard', () => {
     authServiceSpy.isLoggedIn.and.returnValue(false);
     routerSpy.createUrlTree.and.returnValue({} as UrlTree);
 
-    TestBed.runInInjectionContext(() => authGuard({} as any, {} as any));
+    TestBed.runInInjectionContext(() => authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot));
 
     expect(routerSpy.createUrlTree).toHaveBeenCalledWith(['/']);
   });
@@ -45,7 +44,7 @@ describe('authGuard', () => {
     routerSpy.createUrlTree.and.returnValue(mockUrlTree);
 
     const result = TestBed.runInInjectionContext(() =>
-      authGuard({} as any, {} as any)
+      authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot)
     );
 
     expect(result).toBe(mockUrlTree);

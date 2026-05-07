@@ -135,7 +135,7 @@ describe('ProfileComponent', () => {
 
   describe('unsubscribe', () => {
     beforeEach(() => {
-      topicServiceSpy.unsubscribe.and.returnValue(of(undefined as any));
+      topicServiceSpy.unsubscribe.and.returnValue(of(void 0));
     });
 
     it('should call TopicService.unsubscribe with the topic ID', () => {

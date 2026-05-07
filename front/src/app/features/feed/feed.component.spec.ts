@@ -12,7 +12,7 @@ import { Post } from '../../shared/models/post.model';
 class NavbarStubComponent {}
 
 @Component({ selector: 'app-post-card', template: '', standalone: true })
-class PostCardStubComponent { @Input() post: any; }
+class PostCardStubComponent { @Input() post!: Post; }
 
 describe('FeedComponent', () => {
   let component: FeedComponent;

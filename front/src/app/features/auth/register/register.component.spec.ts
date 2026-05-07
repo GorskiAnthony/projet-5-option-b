@@ -3,6 +3,7 @@ import { provideRouter, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { AuthResponse } from '../../../shared/models/user.model';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -67,7 +68,7 @@ describe('RegisterComponent', () => {
     });
 
     it('should call auth.register with form values on valid submission', () => {
-      authServiceSpy.register.and.returnValue(of({} as any));
+      authServiceSpy.register.and.returnValue(of({} as AuthResponse));
       component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
       component.onSubmit();
@@ -80,7 +81,7 @@ describe('RegisterComponent', () => {
     });
 
     it('should navigate to /feed on successful registration', fakeAsync(() => {
-      authServiceSpy.register.and.returnValue(of({} as any));
+      authServiceSpy.register.and.returnValue(of({} as AuthResponse));
       const navigateSpy = spyOn(router, 'navigate');
       component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
@@ -111,7 +112,7 @@ describe('RegisterComponent', () => {
     }));
 
     it('should clear any previous error before a new submission', () => {
-      authServiceSpy.register.and.returnValue(of({} as any));
+      authServiceSpy.register.and.returnValue(of({} as AuthResponse));
       component.error.set('Previous error');
       component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'Test1234!' });
 
