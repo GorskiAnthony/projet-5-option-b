@@ -12,9 +12,19 @@
           <h2 class="topic-card__title">{{ topic.name }}</h2>
           <p class="topic-card__description">{{ topic.description }}</p>
           @if (topic.subscribed) {
-            <button class="btn btn--subscribed" (click)="toggleSubscription(topic)">Déjà abonné</button>
+            <button
+              class="btn btn--subscribed"
+              (click)="toggleSubscription(topic)"
+            >
+              Se désabonner
+            </button>
           } @else {
-            <button class="btn btn--primary" (click)="toggleSubscription(topic)">S'abonner</button>
+            <button
+              class="btn btn--primary"
+              (click)="toggleSubscription(topic)"
+            >
+              S'abonner
+            </button>
           }
         </div>
       }

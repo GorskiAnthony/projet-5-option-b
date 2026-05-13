@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "serve:prod": "ng build --configuration=local-prod && npx serve dist/mdd-client -s -l 4200",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

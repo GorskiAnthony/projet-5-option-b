@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -22,6 +23,9 @@ public class DataInitializer implements ApplicationRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${app.init.user.password:Test1234!}")
+    private String initUserPassword;
+
     public DataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -33,7 +37,7 @@ public class DataInitializer implements ApplicationRunner {
             User user = new User();
             user.setUsername("user");
             user.setEmail("user@mdd.com");
-            user.setPassword(passwordEncoder.encode("password"));
+            user.setPassword(passwordEncoder.encode(initUserPassword));
             user.setCreatedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info("Utilisateur de test créé : user@mdd.com");
