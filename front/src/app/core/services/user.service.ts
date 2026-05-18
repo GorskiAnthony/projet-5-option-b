@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { User } from '../../shared/models/user.model';
+import { User, UpdateProfileRequest } from '../../shared/models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -11,7 +11,7 @@ export class UserService {
     return this.http.get<User>(`${environment.apiUrl}/users/me`);
   }
 
-  updateProfile(body: Partial<User & { password: string }>) {
+  updateProfile(body: UpdateProfileRequest) {
     return this.http.put<User>(`${environment.apiUrl}/users/me`, body);
   }
 }
