@@ -64,6 +64,7 @@ class CommentServiceTest {
         // Arrange
         Comment c1 = buildComment(1L, "Premier", user,    LocalDateTime.of(2024, 1, 1, 10, 0));
         Comment c2 = buildComment(2L, "Deuxième", userBob, LocalDateTime.of(2024, 1, 2, 10, 0));
+        when(postRepository.existsById(1L)).thenReturn(true);
         when(commentRepository.findByPostIdOrderByCreatedAtAsc(1L)).thenReturn(List.of(c1, c2));
 
         // Act
@@ -76,16 +77,29 @@ class CommentServiceTest {
     }
 
     @Test
-    @DisplayName("getByPost — doit retourner une liste vide quand aucun commentaire n'existe")
-    void getByPost_shouldReturnEmptyList_whenNoComments() {
+    @DisplayName("getByPost — doit retourner une liste vide quand le post existe sans commentaires")
+    void getByPost_shouldReturnEmptyList_whenPostHasNoComments() {
         // Arrange
-        when(commentRepository.findByPostIdOrderByCreatedAtAsc(99L)).thenReturn(List.of());
+        when(postRepository.existsById(1L)).thenReturn(true);
+        when(commentRepository.findByPostIdOrderByCreatedAtAsc(1L)).thenReturn(List.of());
 
         // Act
-        List<CommentDto> result = commentService.getByPost(99L);
+        List<CommentDto> result = commentService.getByPost(1L);
 
         // Assert
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    @DisplayName("getByPost — doit lever une exception quand le post est introuvable")
+    void getByPost_shouldThrow_whenPostNotFound() {
+        // Arrange
+        when(postRepository.existsById(99L)).thenReturn(false);
+
+        // Act & Assert
+        assertThatThrownBy(() -> commentService.getByPost(99L))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Article non trouvé");
     }
 
     @Test

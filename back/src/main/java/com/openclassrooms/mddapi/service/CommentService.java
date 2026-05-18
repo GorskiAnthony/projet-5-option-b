@@ -38,6 +38,8 @@ public class CommentService implements ICommentService {
     @Override
     @Transactional(readOnly = true)
     public List<CommentDto> getByPost(Long postId) {
+        if (!postRepository.existsById(postId))
+            throw new ResourceNotFoundException("Article non trouvé");
         return commentRepository.findByPostIdOrderByCreatedAtAsc(postId).stream()
                 .map(this::toDto)
                 .toList();
