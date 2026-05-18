@@ -47,10 +47,9 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     @Transactional
     public User register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail()))
-            throw new IllegalArgumentException("Email déjà utilisé");
-        if (userRepository.existsByUsername(request.getUsername()))
-            throw new IllegalArgumentException("Nom d'utilisateur déjà utilisé");
+        if (userRepository.existsByEmail(request.getEmail())
+                || userRepository.existsByUsername(request.getUsername()))
+            throw new IllegalArgumentException("Email ou nom d'utilisateur déjà utilisé");
 
         User user = new User();
         user.setUsername(request.getUsername());
@@ -70,12 +69,12 @@ public class UserService implements IUserService, UserDetailsService {
 
         if (request.getUsername() != null && !request.getUsername().equals(user.getRealUsername())) {
             if (userRepository.existsByUsername(request.getUsername()))
-                throw new IllegalArgumentException("Nom d'utilisateur déjà utilisé");
+                throw new IllegalArgumentException("Email ou nom d'utilisateur déjà utilisé");
             user.setUsername(request.getUsername());
         }
         if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail()))
-                throw new IllegalArgumentException("Email déjà utilisé");
+                throw new IllegalArgumentException("Email ou nom d'utilisateur déjà utilisé");
             user.setEmail(request.getEmail());
         }
         if (request.getPassword() != null && !request.getPassword().isBlank())

@@ -79,7 +79,7 @@ class UserServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> userService.register(req))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Email déjà utilisé");
+                .hasMessageContaining("Email ou nom d'utilisateur déjà utilisé");
     }
 
     @Test
@@ -95,7 +95,7 @@ class UserServiceTest {
         // Act & Assert
         assertThatThrownBy(() -> userService.register(req))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Nom d'utilisateur déjà utilisé");
+                .hasMessageContaining("Email ou nom d'utilisateur déjà utilisé");
     }
 
     @Test
