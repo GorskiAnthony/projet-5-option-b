@@ -8,16 +8,16 @@ import { AuthService } from '../../../core/services/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  private fb = inject(FormBuilder);
-  private auth = inject(AuthService);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   form = this.fb.group({
     identifier: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   loading = signal(false);
@@ -29,12 +29,14 @@ export class LoginComponent {
     this.error.set('');
 
     const { identifier, password } = this.form.value;
-    this.auth.login({ identifier: identifier!, password: password! }).subscribe({
-      next: () => this.router.navigate(['/feed']),
-      error: () => {
-        this.error.set('Identifiants incorrects. Veuillez réessayer.');
-        this.loading.set(false);
-      }
-    });
+    this.auth
+      .login({ identifier: identifier!, password: password! })
+      .subscribe({
+        next: () => this.router.navigate(['/feed']),
+        error: () => {
+          this.error.set('Identifiants incorrects. Veuillez réessayer.');
+          this.loading.set(false);
+        },
+      });
   }
 }

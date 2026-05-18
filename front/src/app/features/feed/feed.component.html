@@ -8,17 +8,24 @@
     <button
       class="sort-btn"
       (click)="toggleSort()"
-      [attr.aria-label]="sortDesc() ? 'Trier par date croissante' : 'Trier par date décroissante'"
+      [attr.aria-label]="
+        sortDesc() ? 'Trier par date croissante' : 'Trier par date décroissante'
+      "
       [attr.aria-pressed]="sortDesc()"
     >
-      Trier par <span class="sort-icon" aria-hidden="true">{{ sortDesc() ? '↓' : '↑' }}</span>
+      Trier par
+      <span class="sort-icon" aria-hidden="true">{{
+        sortDesc() ? "↓" : "↑"
+      }}</span>
     </button>
   </div>
 
   @if (loading()) {
     <p class="feed__empty">Chargement...</p>
   } @else if (posts().length === 0) {
-    <p class="feed__empty">Aucun article pour le moment. Abonnez-vous à des thèmes !</p>
+    <p class="feed__empty">
+      Aucun article pour le moment. Abonnez-vous à des thèmes !
+    </p>
   } @else {
     <div class="feed__grid">
       @for (post of posts(); track post.id) {

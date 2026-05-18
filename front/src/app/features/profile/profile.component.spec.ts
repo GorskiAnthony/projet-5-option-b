@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -21,13 +26,24 @@ describe('ProfileComponent', () => {
   const mockUser: User = { id: 1, username: 'john', email: 'john@example.com' };
 
   const mockTopics: Topic[] = [
-    { id: 1, name: 'Angular', description: 'Angular framework', subscribed: true },
-    { id: 2, name: 'Java', description: 'Java programming', subscribed: false }
+    {
+      id: 1,
+      name: 'Angular',
+      description: 'Angular framework',
+      subscribed: true,
+    },
+    { id: 2, name: 'Java', description: 'Java programming', subscribed: false },
   ];
 
   beforeEach(async () => {
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getProfile', 'updateProfile']);
-    topicServiceSpy = jasmine.createSpyObj('TopicService', ['getAll', 'unsubscribe']);
+    userServiceSpy = jasmine.createSpyObj('UserService', [
+      'getProfile',
+      'updateProfile',
+    ]);
+    topicServiceSpy = jasmine.createSpyObj('TopicService', [
+      'getAll',
+      'unsubscribe',
+    ]);
     userServiceSpy.getProfile.and.returnValue(of(mockUser));
     topicServiceSpy.getAll.and.returnValue(of(mockTopics));
 
@@ -36,14 +52,14 @@ describe('ProfileComponent', () => {
       providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: TopicService, useValue: topicServiceSpy },
-        provideRouter([])
-      ]
+        provideRouter([]),
+      ],
     })
-    .overrideComponent(ProfileComponent, {
-      remove: { imports: [NavbarComponent] },
-      add: { imports: [NavbarStubComponent] }
-    })
-    .compileComponents();
+      .overrideComponent(ProfileComponent, {
+        remove: { imports: [NavbarComponent] },
+        add: { imports: [NavbarStubComponent] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
@@ -71,30 +87,47 @@ describe('ProfileComponent', () => {
   describe('onSave', () => {
     it('should call UserService.updateProfile with username and email', () => {
       userServiceSpy.updateProfile.and.returnValue(of(mockUser));
-      component.form.patchValue({ username: 'john_updated', email: 'new@example.com', password: '' });
+      component.form.patchValue({
+        username: 'john_updated',
+        email: 'new@example.com',
+        password: '',
+      });
 
       component.onSave();
 
-      expect(userServiceSpy.updateProfile).toHaveBeenCalledWith({ username: 'john_updated', email: 'new@example.com' });
+      expect(userServiceSpy.updateProfile).toHaveBeenCalledWith({
+        username: 'john_updated',
+        email: 'new@example.com',
+      });
     });
 
     it('should include password in body when password field is filled', () => {
       userServiceSpy.updateProfile.and.returnValue(of(mockUser));
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: 'newpass123' });
+      component.form.patchValue({
+        username: 'john',
+        email: 'john@example.com',
+        password: 'newpass123',
+      });
 
       component.onSave();
 
-      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as UpdateProfileRequest;
+      const callArg = userServiceSpy.updateProfile.calls.mostRecent()
+        .args[0] as UpdateProfileRequest;
       expect(callArg.password).toBe('newpass123');
     });
 
     it('should not include password in body when password field is empty', () => {
       userServiceSpy.updateProfile.and.returnValue(of(mockUser));
-      component.form.patchValue({ username: 'john', email: 'john@example.com', password: '' });
+      component.form.patchValue({
+        username: 'john',
+        email: 'john@example.com',
+        password: '',
+      });
 
       component.onSave();
 
-      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as UpdateProfileRequest;
+      const callArg = userServiceSpy.updateProfile.calls.mostRecent()
+        .args[0] as UpdateProfileRequest;
       expect(callArg.password).toBeUndefined();
     });
 
@@ -116,7 +149,9 @@ describe('ProfileComponent', () => {
     }));
 
     it('should set the error signal on failure', () => {
-      userServiceSpy.updateProfile.and.returnValue(throwError(() => new Error('Server error')));
+      userServiceSpy.updateProfile.and.returnValue(
+        throwError(() => new Error('Server error')),
+      );
 
       component.onSave();
 
@@ -140,7 +175,9 @@ describe('ProfileComponent', () => {
 
     it('should call TopicService.unsubscribe with the topic ID', () => {
       component.unsubscribe(mockTopics[0]);
-      expect(topicServiceSpy.unsubscribe).toHaveBeenCalledWith(mockTopics[0].id);
+      expect(topicServiceSpy.unsubscribe).toHaveBeenCalledWith(
+        mockTopics[0].id,
+      );
     });
 
     it('should remove the topic from the subscriptions list', () => {
@@ -152,7 +189,12 @@ describe('ProfileComponent', () => {
     });
 
     it('should not remove other topics from the list', () => {
-      const anotherTopic: Topic = { id: 3, name: 'TypeScript', description: 'TS lang', subscribed: true };
+      const anotherTopic: Topic = {
+        id: 3,
+        name: 'TypeScript',
+        description: 'TS lang',
+        subscribed: true,
+      };
       component.subscriptions.set([mockTopics[0], anotherTopic]);
 
       component.unsubscribe(mockTopics[0]);

@@ -10,7 +10,7 @@ import { Post } from '../../shared/models/post.model';
   standalone: true,
   imports: [RouterLink, NavbarComponent, PostCardComponent],
   templateUrl: './feed.component.html',
-  styleUrl: './feed.component.css'
+  styleUrl: './feed.component.css',
 })
 export class FeedComponent implements OnInit {
   private postService = inject(PostService);
@@ -21,21 +21,22 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.postService.getFeed().subscribe({
-      next: posts => {
+      next: (posts) => {
         this.posts.set(posts);
         this.loading.set(false);
       },
-      error: () => this.loading.set(false)
+      error: () => this.loading.set(false),
     });
   }
 
   toggleSort() {
-    this.sortDesc.update(v => !v);
-    this.posts.update(posts =>
+    this.sortDesc.update((v) => !v);
+    this.posts.update((posts) =>
       [...posts].sort((a, b) => {
-        const diff = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        const diff =
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         return this.sortDesc() ? -diff : diff;
-      })
+      }),
     );
   }
 }

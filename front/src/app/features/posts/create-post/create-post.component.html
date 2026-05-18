@@ -40,8 +40,12 @@
     }
 
     <div class="create-post__actions">
-      <button type="submit" class="btn btn--primary" [disabled]="form.invalid || loading()">
-        {{ loading() ? 'Création...' : 'Créer' }}
+      <button
+        type="submit"
+        class="btn btn--primary"
+        [disabled]="form.invalid || loading()"
+      >
+        {{ loading() ? "Création..." : "Créer" }}
       </button>
     </div>
   </form>

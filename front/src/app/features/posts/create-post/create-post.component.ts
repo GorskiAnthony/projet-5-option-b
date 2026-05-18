@@ -11,13 +11,13 @@ import { Topic } from '../../../shared/models/topic.model';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, NavbarComponent],
   templateUrl: './create-post.component.html',
-  styleUrl: './create-post.component.css'
+  styleUrl: './create-post.component.css',
 })
 export class CreatePostComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private postService = inject(PostService);
-  private topicService = inject(TopicService);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly postService = inject(PostService);
+  private readonly topicService = inject(TopicService);
+  private readonly router = inject(Router);
 
   topics = signal<Topic[]>([]);
   loading = signal(false);
@@ -26,12 +26,12 @@ export class CreatePostComponent implements OnInit {
   form = this.fb.group({
     topicId: ['', Validators.required],
     title: ['', Validators.required],
-    content: ['', Validators.required]
+    content: ['', Validators.required],
   });
 
   ngOnInit() {
     this.topicService.getAll().subscribe({
-      next: topics => this.topics.set(topics)
+      next: (topics) => this.topics.set(topics),
     });
   }
 
@@ -39,9 +39,14 @@ export class CreatePostComponent implements OnInit {
     if (this.form.invalid) return;
     this.loading.set(true);
     const { topicId, title, content } = this.form.value;
-    this.postService.create({ topicId: Number(topicId), title: title!, content: content! }).subscribe({
-      next: post => this.router.navigate(['/posts', post.id]),
-      error: () => { this.error.set('Erreur lors de la création.'); this.loading.set(false); }
-    });
+    this.postService
+      .create({ topicId: Number(topicId), title: title!, content: content! })
+      .subscribe({
+        next: (post) => this.router.navigate(['/posts', post.id]),
+        error: () => {
+          this.error.set('Erreur lors de la création.');
+          this.loading.set(false);
+        },
+      });
   }
 }
