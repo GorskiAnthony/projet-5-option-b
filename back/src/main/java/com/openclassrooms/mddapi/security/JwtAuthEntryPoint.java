@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Point d'entrée 401 : retourne un JSON {@code {"erreur":"Accès non autorisé"}}
+ * lorsqu'une requête atteint une route protégée sans token JWT valide.
+ */
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
