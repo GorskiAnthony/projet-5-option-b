@@ -2,6 +2,10 @@ package com.openclassrooms.mddapi.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +29,7 @@ import com.openclassrooms.mddapi.service.IPostService;
  */
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "Articles", description = "Fil d'actualité, consultation et création d'articles")
 public class PostController {
 
     private final IPostService postService;
@@ -33,16 +38,29 @@ public class PostController {
         this.postService = postService;
     }
 
+    @Operation(summary = "Fil d'articles", description = "Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés par date décroissante.")
+    @ApiResponse(responseCode = "200", description = "Liste d'articles (peut être vide)")
     @GetMapping("/feed")
     public List<PostDto> getFeed(@AuthenticationPrincipal User user) {
         return postService.getFeed(user.getEmail());
     }
 
+    @Operation(summary = "Détail d'un article")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Article trouvé"),
+        @ApiResponse(responseCode = "404", description = "Article introuvable")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getById(id));
     }
 
+    @Operation(summary = "Créer un article")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Article créé"),
+        @ApiResponse(responseCode = "400", description = "Champs invalides"),
+        @ApiResponse(responseCode = "404", description = "Thème introuvable")
+    })
     @PostMapping
     public ResponseEntity<PostDto> create(@Valid @RequestBody CreatePostRequest request,
                                           @AuthenticationPrincipal User user) {

@@ -2,6 +2,10 @@ package com.openclassrooms.mddapi.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +29,7 @@ import jakarta.validation.Valid;
  */
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
+@Tag(name = "Commentaires", description = "Lecture et ajout de commentaires sur un article")
 public class CommentController {
 
     private final ICommentService commentService;
@@ -33,11 +38,22 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @Operation(summary = "Commentaires d'un article")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Liste de commentaires (peut être vide)"),
+        @ApiResponse(responseCode = "404", description = "Article introuvable")
+    })
     @GetMapping
     public List<CommentDto> getByPost(@PathVariable Long postId) {
         return commentService.getByPost(postId);
     }
 
+    @Operation(summary = "Ajouter un commentaire")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Commentaire créé"),
+        @ApiResponse(responseCode = "400", description = "Contenu manquant"),
+        @ApiResponse(responseCode = "404", description = "Article introuvable")
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDto create(@PathVariable Long postId,

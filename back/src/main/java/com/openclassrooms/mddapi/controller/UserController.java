@@ -1,5 +1,9 @@
 package com.openclassrooms.mddapi.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ import com.openclassrooms.mddapi.service.IUserService;
  */
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Profil utilisateur", description = "Consultation et mise à jour du profil de l'utilisateur authentifié")
 public class UserController {
 
     private final IUserService userService;
@@ -29,11 +34,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Profil de l'utilisateur courant")
+    @ApiResponse(responseCode = "200", description = "Données du profil")
     @GetMapping("/me")
     public UserDto me(@AuthenticationPrincipal User user) {
         return userService.toDto(user);
     }
 
+    @Operation(summary = "Mettre à jour le profil", description = "Tous les champs sont optionnels. Seuls les champs fournis sont mis à jour.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Profil mis à jour"),
+        @ApiResponse(responseCode = "400", description = "Champs invalides"),
+        @ApiResponse(responseCode = "409", description = "Email ou nom d'utilisateur déjà utilisé")
+    })
     @PutMapping("/me")
     public ResponseEntity<UserDto> updateProfile(@AuthenticationPrincipal User user,
                                                  @Valid @RequestBody UpdateProfileRequest request) {
