@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +37,14 @@ public class PostService implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PostDto> getFeed(String userEmail) {
+    public List<PostDto> getFeed(String userEmail, Pageable pageable) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur non trouvé"));
-        return postRepository.findByTopicsOrderByCreatedAtDesc(user.getSubscriptions())
+        if (user.getSubscriptions().isEmpty()) {
+            return List.of();
+        }
+        return postRepository.findFeedForTopics(user.getSubscriptions(), pageable)
+                .getContent()
                 .stream()
                 .map(this::toDto)
                 .toList();

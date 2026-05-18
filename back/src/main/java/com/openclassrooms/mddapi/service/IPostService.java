@@ -2,6 +2,8 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
 
@@ -11,13 +13,13 @@ import com.openclassrooms.mddapi.dto.PostDto;
 public interface IPostService {
 
     /**
-     * Retourne les articles des topics auxquels l'utilisateur est abonné,
-     * triés par date décroissante.
+     * Retourne une page d'articles des topics auxquels l'utilisateur est abonné.
      *
      * @param userEmail email de l'utilisateur authentifié
+     * @param pageable  paramètres de pagination et de tri
      * @return liste de {@link PostDto} du fil d'actualité
      */
-    List<PostDto> getFeed(String userEmail);
+    List<PostDto> getFeed(String userEmail, Pageable pageable);
 
     /**
      * Retourne un article par son identifiant.

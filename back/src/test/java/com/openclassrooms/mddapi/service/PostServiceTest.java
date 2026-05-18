@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +20,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import com.openclassrooms.mddapi.dto.CreatePostRequest;
 import com.openclassrooms.mddapi.dto.PostDto;
@@ -68,11 +71,11 @@ class PostServiceTest {
     void getFeed_shouldReturnPostsForSubscribedTopics() {
         // Arrange
         when(userRepository.findByEmail("alice@example.com")).thenReturn(Optional.of(user));
-        when(postRepository.findByTopicsOrderByCreatedAtDesc(user.getSubscriptions()))
-                .thenReturn(List.of(post));
+        when(postRepository.findFeedForTopics(eq(user.getSubscriptions()), any(Pageable.class)))
+                .thenReturn(new PageImpl<>(List.of(post)));
 
         // Act
-        List<PostDto> result = postService.getFeed("alice@example.com");
+        List<PostDto> result = postService.getFeed("alice@example.com", Pageable.unpaged());
 
         // Assert
         assertThat(result).hasSize(1);
@@ -86,7 +89,7 @@ class PostServiceTest {
         when(userRepository.findByEmail("nobody@example.com")).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> postService.getFeed("nobody@example.com"))
+        assertThatThrownBy(() -> postService.getFeed("nobody@example.com", Pageable.unpaged()))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Utilisateur non trouvé");
     }

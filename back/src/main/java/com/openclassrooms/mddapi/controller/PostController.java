@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,11 +41,13 @@ public class PostController {
         this.postService = postService;
     }
 
-    @Operation(summary = "Fil d'articles", description = "Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés par date décroissante.")
+    @Operation(summary = "Fil d'articles", description = "Retourne les articles des thèmes auxquels l'utilisateur est abonné, triés par date décroissante. Paramètres de pagination acceptés : page, size, sort.")
     @ApiResponse(responseCode = "200", description = "Liste d'articles (peut être vide)")
     @GetMapping("/feed")
-    public List<PostDto> getFeed(@AuthenticationPrincipal User user) {
-        return postService.getFeed(user.getEmail());
+    public List<PostDto> getFeed(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return postService.getFeed(user.getEmail(), pageable);
     }
 
     @Operation(summary = "Détail d'un article")
