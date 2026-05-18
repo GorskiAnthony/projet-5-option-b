@@ -33,13 +33,15 @@
       </div>
 
       <div class="comments__form">
+        <label class="sr-only" for="new-comment">Votre commentaire</label>
         <textarea
+          id="new-comment"
           class="comments__textarea"
           [(ngModel)]="newComment"
           placeholder="Écrivez ici votre commentaire"
           rows="3"
         ></textarea>
-        <button class="comments__send" (click)="sendComment()" [disabled]="!newComment.trim()" aria-label="Envoyer">
+        <button class="comments__send" (click)="sendComment()" [disabled]="!newComment.trim()" aria-label="Envoyer le commentaire">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
             <line x1="22" y1="2" x2="11" y2="13"/>
             <polygon points="22 2 15 22 11 13 2 9 22 2"/>

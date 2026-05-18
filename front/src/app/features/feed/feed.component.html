@@ -1,10 +1,17 @@
 <app-navbar />
 
 <main class="feed">
+  <h1 class="sr-only">Fil d'articles</h1>
+
   <div class="feed__toolbar">
     <a class="btn btn--primary" routerLink="/posts/create">Créer un article</a>
-    <button class="sort-btn" (click)="toggleSort()">
-      Trier par <span class="sort-icon">{{ sortDesc() ? '↓' : '↑' }}</span>
+    <button
+      class="sort-btn"
+      (click)="toggleSort()"
+      [attr.aria-label]="sortDesc() ? 'Trier par date croissante' : 'Trier par date décroissante'"
+      [attr.aria-pressed]="sortDesc()"
+    >
+      Trier par <span class="sort-icon" aria-hidden="true">{{ sortDesc() ? '↓' : '↑' }}</span>
     </button>
   </div>
 

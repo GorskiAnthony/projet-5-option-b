@@ -39,13 +39,13 @@
           formControlName="password"
           autocomplete="new-password"
         />
-        @if (form.get('password')?.hasError('pattern') && form.get('password')?.touched) {
-          <p class="auth-error">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
+        @if (form.get('password')?.hasError('passwordStrength') && form.get('password')?.touched) {
+          <p class="auth-error" role="alert">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.</p>
         }
       </div>
 
       @if (error()) {
-        <p class="auth-error">{{ error() }}</p>
+        <p class="auth-error" role="alert">{{ error() }}</p>
       }
 
       <button type="submit" class="btn btn--primary btn--full" [disabled]="form.invalid || loading()">

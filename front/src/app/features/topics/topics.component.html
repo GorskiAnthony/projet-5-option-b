@@ -1,6 +1,8 @@
 <app-navbar />
 
 <main class="topics">
+  <h1 class="sr-only">Thèmes</h1>
+
   @if (loading()) {
     <p class="topics__empty">Chargement...</p>
   } @else if (topics().length === 0) {
@@ -15,6 +17,7 @@
             <button
               class="btn btn--subscribed"
               (click)="toggleSubscription(topic)"
+              [attr.aria-label]="'Se désabonner de ' + topic.name"
             >
               Se désabonner
             </button>
@@ -22,6 +25,7 @@
             <button
               class="btn btn--primary"
               (click)="toggleSubscription(topic)"
+              [attr.aria-label]="'S\'abonner à ' + topic.name"
             >
               S'abonner
             </button>
