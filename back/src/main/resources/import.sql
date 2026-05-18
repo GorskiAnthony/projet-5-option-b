@@ -1,8 +1,8 @@
 -- Users (données de démo — mot de passe : "password")
-INSERT INTO users (username, email, password, created_at) VALUES ('alice',   'alice@mdd.com',   '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-01-01 00:00:00');
-INSERT INTO users (username, email, password, created_at) VALUES ('bob',     'bob@mdd.com',     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-01-01 00:00:00');
-INSERT INTO users (username, email, password, created_at) VALUES ('charlie', 'charlie@mdd.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-01-01 00:00:00');
-INSERT INTO users (username, email, password, created_at) VALUES ('dave',    'dave@mdd.com',    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-01-01 00:00:00');
+INSERT INTO users (username, email, password, created_at) VALUES ('alice',   'alice@mdd.com',   '$argon2id$v=19$m=16384,t=2,p=1$lTJnS+gSsLwqI9F54yCA6Q$97HfxTdTqRYyFjlWrjq3SU/zT7+B0nHMlydQMulggds', '2025-01-01 00:00:00');
+INSERT INTO users (username, email, password, created_at) VALUES ('bob',     'bob@mdd.com',     '$argon2id$v=19$m=16384,t=2,p=1$lTJnS+gSsLwqI9F54yCA6Q$97HfxTdTqRYyFjlWrjq3SU/zT7+B0nHMlydQMulggds', '2025-01-01 00:00:00');
+INSERT INTO users (username, email, password, created_at) VALUES ('charlie', 'charlie@mdd.com', '$argon2id$v=19$m=16384,t=2,p=1$lTJnS+gSsLwqI9F54yCA6Q$97HfxTdTqRYyFjlWrjq3SU/zT7+B0nHMlydQMulggds', '2025-01-01 00:00:00');
+INSERT INTO users (username, email, password, created_at) VALUES ('dave',    'dave@mdd.com',    '$argon2id$v=19$m=16384,t=2,p=1$lTJnS+gSsLwqI9F54yCA6Q$97HfxTdTqRYyFjlWrjq3SU/zT7+B0nHMlydQMulggds', '2025-01-01 00:00:00');
 
 -- Topics
 INSERT INTO topics (name, description) VALUES ('Java', 'Tout sur le langage Java : syntaxe, JVM, nouveautés des dernières versions et bonnes pratiques.');
