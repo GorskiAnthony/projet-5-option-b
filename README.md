@@ -606,35 +606,33 @@ Le rapport HTML de couverture est généré dans :
 
 Les DTOs et modèles sont exclus de la couverture JaCoCo (POJO sans logique à tester).
 
-**Résultats (dernière exécution) : 28/28 tests — BUILD SUCCESS**
+**Résultats (dernière exécution) : 48/48 tests — BUILD SUCCESS**
 
-| Métrique     | Couvert | Total | Taux  |
-| ------------ | ------- | ----- | ----- |
-| Instructions | 913     | 1060  | 86 %  |
-| Branches     | 20      | 28    | 71 %  |
-| Lignes       | 227     | 250   | 91 %  |
-| Méthodes     | 65      | 85    | 76 %  |
+| Métrique     | Taux  |
+| ------------ | ----- |
+| Instructions | 94 %  |
+| Branches     | 78 %  |
 
 **Couverture par classe :**
 
-| Classe                  | Instructions |
-| ----------------------- | ------------ |
-| `AuthController`        | 100 %        |
-| `JwtFilter`             | 100 %        |
-| `JwtAuthEntryPoint`     | 100 %        |
-| `SecurityConfig`        | 100 %        |
-| `DataInitializer`       | 100 %        |
-| `ResourceNotFoundException` | 100 %    |
-| `PostService`           | 96 %         |
-| `CommentService`        | 94 %         |
-| `UserService`           | 92 %         |
-| `JwtUtils`              | 88 %         |
-| `TopicService`          | 79 %         |
-| `GlobalExceptionHandler`| 52 %         |
-| `PostController`        | 43 %         |
-| `TopicController`       | 40 %         |
-| `CommentController`     | 32 %         |
-| `UserController`        | 32 %         |
+| Classe                      | Instructions |
+| --------------------------- | ------------ |
+| `AuthController`            | 100 %        |
+| `JwtFilter`                 | 100 %        |
+| `JwtAuthEntryPoint`         | 100 %        |
+| `SecurityConfig`            | 100 %        |
+| `DataInitializer`           | 100 %        |
+| `ResourceNotFoundException` | 100 %        |
+| `GlobalExceptionHandler`    | 100 %        |
+| `PostController`            | 94 %         |
+| `TopicController`           | 94 %         |
+| `CommentController`         | 94 %         |
+| `UserController`            | 94 %         |
+| `PostService`               | 96 %         |
+| `CommentService`            | 94 %         |
+| `UserService`               | 92 %         |
+| `JwtUtils`                  | 88 %         |
+| `TopicService`              | 79 %         |
 
 ### Frontend — Tests unitaires
 
@@ -653,12 +651,12 @@ Le rapport HTML est généré dans :
 
 **Résultats (dernière exécution) : 129/129 tests — TOTAL: SUCCESS**
 
-| Métrique   | Couvert | Total | Taux    |
-| ---------- | ------- | ----- | ------- |
-| Statements | 197     | 199   | 98.99 % |
-| Branches   | 18      | 19    | 94.73 % |
-| Functions  | 73      | 74    | 98.64 % |
-| Lines      | 169     | 171   | 98.83 % |
+| Métrique   | Couvert | Total | Taux     |
+| ---------- | ------- | ----- | -------- |
+| Statements | 200     | 202   | 99 %     |
+| Branches   | 19      | 19    | 100 %    |
+| Functions  | 72      | 73    | 98.63 %  |
+| Lines      | 171     | 173   | 98.84 %  |
 
 ---
 
@@ -768,6 +766,21 @@ Cliquez sur votre avatar ou sur **Profil** dans le menu. Vous pouvez modifier vo
 ### Comment me déconnecter ?
 
 Cliquez sur **Déconnexion** dans le menu de navigation. Votre token est supprimé localement et vous êtes redirigé vers la page d'accueil.
+
+### Quelles données personnelles sont collectées ?
+
+MDD collecte uniquement les données nécessaires au fonctionnement du service : votre **nom d'utilisateur**, votre **adresse email** et votre **mot de passe** (stocké sous forme de hachage irréversible — votre mot de passe en clair n'est jamais conservé). Aucune donnée n'est transmise à des tiers.
+
+### Comment protéger mon compte ?
+
+- Choisissez un mot de passe unique, d'au moins 8 caractères, avec majuscule, minuscule, chiffre et caractère spécial.
+- Ne communiquez jamais votre mot de passe. MDD ne vous le demandera jamais.
+- Votre session expire automatiquement après 24 heures — reconnectez-vous si besoin.
+- Sur un appareil partagé, cliquez sur **Déconnexion** avant de quitter.
+
+### Comment modifier ou supprimer mes informations ?
+
+Vous pouvez modifier votre nom d'utilisateur, email et mot de passe à tout moment depuis la page **Profil**. Pour toute demande de suppression de compte, contactez l'administrateur de la plateforme.
 
 ---
 
