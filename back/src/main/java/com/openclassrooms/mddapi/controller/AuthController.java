@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.controller;
 
+import java.util.Map;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -75,7 +77,8 @@ public class AuthController {
             String token = jwtUtils.generateToken(user.getEmail());
             return ResponseEntity.ok(new AuthResponse(token, userService.toDto(user)));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants incorrects");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("erreur", "Identifiants incorrects"));
         }
     }
 }
