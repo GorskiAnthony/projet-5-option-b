@@ -6,7 +6,7 @@ import { ProfileComponent } from './profile.component';
 import { UserService } from '../../core/services/user.service';
 import { TopicService } from '../../core/services/topic.service';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { User } from '../../shared/models/user.model';
+import { UpdateProfileRequest, User } from '../../shared/models/user.model';
 import { Topic } from '../../shared/models/topic.model';
 
 @Component({ selector: 'app-navbar', template: '', standalone: true })
@@ -84,8 +84,8 @@ describe('ProfileComponent', () => {
 
       component.onSave();
 
-      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as Record<string, string>;
-      expect(callArg['password']).toBe('newpass123');
+      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as UpdateProfileRequest;
+      expect(callArg.password).toBe('newpass123');
     });
 
     it('should not include password in body when password field is empty', () => {
@@ -94,8 +94,8 @@ describe('ProfileComponent', () => {
 
       component.onSave();
 
-      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as Record<string, string>;
-      expect(callArg['password']).toBeUndefined();
+      const callArg = userServiceSpy.updateProfile.calls.mostRecent().args[0] as UpdateProfileRequest;
+      expect(callArg.password).toBeUndefined();
     });
 
     it('should set saved signal to true on success', () => {
