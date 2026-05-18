@@ -1,9 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { UserService } from '../../core/services/user.service';
 import { TopicService } from '../../core/services/topic.service';
 import { Topic } from '../../shared/models/topic.model';
+import { UpdateProfileRequest } from '../../shared/models/user.model';
+import { passwordStrengthValidator } from '../../shared/validators/password.validator';
 
 @Component({
   selector: 'app-profile',
@@ -24,12 +26,7 @@ export class ProfileComponent implements OnInit {
   form = this.fb.group({
     username: ['', [Validators.minLength(3), Validators.maxLength(30)]],
     email: ['', [Validators.email]],
-    password: ['', [(control: AbstractControl): ValidationErrors | null => {
-      if (!control.value) return null;
-      return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(control.value)
-        ? null
-        : { passwordStrength: true };
-    }]]
+    password: ['', [passwordStrengthValidator]]
   });
 
   ngOnInit() {
@@ -44,8 +41,8 @@ export class ProfileComponent implements OnInit {
   onSave() {
     this.error.set('');
     const { username, email, password } = this.form.value;
-    const body: Record<string, string> = { username: username!, email: email! };
-    if (password) body['password'] = password;
+    const body: UpdateProfileRequest = { username: username!, email: email! };
+    if (password) body.password = password;
 
     this.userService.updateProfile(body).subscribe({
       next: () => { this.saved.set(true); setTimeout(() => this.saved.set(false), 2000); },
