@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SlicePipe } from '@angular/common';
@@ -16,16 +16,14 @@ import { Comment } from '../../../shared/models/comment.model';
   styleUrl: './post-detail.component.css'
 })
 export class PostDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private postService = inject(PostService);
+  private commentService = inject(CommentService);
+
   post = signal<Post | null>(null);
   comments = signal<Comment[]>([]);
   newComment = '';
   loading = signal(true);
-
-  constructor(
-    private route: ActivatedRoute,
-    private postService: PostService,
-    private commentService: CommentService
-  ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
