@@ -1,0 +1,8 @@
+<a class="post-card" [routerLink]="['/posts', post.id]">
+  <h2 class="post-card__title">{{ post.title }}</h2>
+  <div class="post-card__meta">
+    <span>{{ post.createdAt | slice:0:10 }}</span>
+    <span class="post-card__author">{{ post.author }}</span>
+  </div>
+  <p class="post-card__content">{{ post.content }}</p>
+</a>

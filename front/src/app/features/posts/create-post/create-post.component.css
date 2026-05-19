@@ -1,0 +1,75 @@
+.create-post {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.back-btn {
+  font-size: 22px;
+  color: var(--text);
+  text-decoration: none;
+  align-self: flex-start;
+  transition: color 0.15s;
+}
+
+.back-btn:hover {
+  color: var(--primary);
+}
+
+.create-post__title {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.create-post__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create-post__textarea {
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.create-post__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.create-post__error {
+  font-size: 13px;
+  color: #dc2626;
+  text-align: center;
+}
+
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .create-post {
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .create-post {
+    padding: 20px 16px;
+    max-width: 100%;
+  }
+
+  .create-post__actions .btn {
+    width: 100%;
+  }
+}

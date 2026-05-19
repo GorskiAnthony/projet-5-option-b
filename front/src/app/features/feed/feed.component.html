@@ -1,0 +1,36 @@
+<app-navbar />
+
+<main class="feed">
+  <h1 class="sr-only">Fil d'articles</h1>
+
+  <div class="feed__toolbar">
+    <a class="btn btn--primary" routerLink="/posts/create">Créer un article</a>
+    <button
+      class="sort-btn"
+      (click)="toggleSort()"
+      [attr.aria-label]="
+        sortDesc() ? 'Trier par date croissante' : 'Trier par date décroissante'
+      "
+      [attr.aria-pressed]="sortDesc()"
+    >
+      Trier par
+      <span class="sort-icon" aria-hidden="true">{{
+        sortDesc() ? "↓" : "↑"
+      }}</span>
+    </button>
+  </div>
+
+  @if (loading()) {
+    <p class="feed__empty">Chargement...</p>
+  } @else if (posts().length === 0) {
+    <p class="feed__empty">
+      Aucun article pour le moment. Abonnez-vous à des thèmes !
+    </p>
+  } @else {
+    <div class="feed__grid">
+      @for (post of posts(); track post.id) {
+        <app-post-card [post]="post" />
+      }
+    </div>
+  }
+</main>

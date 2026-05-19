@@ -1,0 +1,52 @@
+<app-navbar />
+
+<main class="create-post">
+  <a class="back-btn" routerLink="/feed">&#8592;</a>
+  <h1 class="create-post__title">Créer un nouvel article</h1>
+
+  <form class="create-post__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label class="form-label" for="post-topic">Thème</label>
+      <select id="post-topic" class="form-input" formControlName="topicId">
+        <option value="" disabled selected>Sélectionner un thème</option>
+        @for (topic of topics(); track topic.id) {
+          <option [value]="topic.id">{{ topic.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="post-title">Titre</label>
+      <input
+        id="post-title"
+        class="form-input"
+        type="text"
+        formControlName="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="post-content">Contenu</label>
+      <textarea
+        id="post-content"
+        class="form-input create-post__textarea"
+        formControlName="content"
+        rows="10"
+      ></textarea>
+    </div>
+
+    @if (error()) {
+      <p class="create-post__error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="create-post__actions">
+      <button
+        type="submit"
+        class="btn btn--primary"
+        [disabled]="form.invalid || loading()"
+      >
+        {{ loading() ? "Création..." : "Créer" }}
+      </button>
+    </div>
+  </form>
+</main>

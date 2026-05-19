@@ -1,0 +1,85 @@
+<nav class="navbar">
+  <a class="navbar__brand" routerLink="/feed">
+    <img class="navbar__logo" src="assets/logo_p6.png" alt="MDD" />
+  </a>
+
+  <!-- Desktop links -->
+  <div class="navbar__desktop">
+    <button class="navbar__logout" (click)="logout()">Se déconnecter</button>
+    <a class="navbar__link" routerLink="/feed" routerLinkActive="active"
+      >Articles</a
+    >
+    <a class="navbar__link" routerLink="/topics" routerLinkActive="active"
+      >Thèmes</a
+    >
+    <a class="navbar__user-btn" routerLink="/profile" aria-label="Profil">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        width="24"
+        height="24"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+      </svg>
+    </a>
+  </div>
+
+  <!-- Mobile burger -->
+  <button
+    class="navbar__burger"
+    (click)="toggleMenu()"
+    [class.open]="menuOpen()"
+    aria-label="Menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Sidebar mobile -->
+@if (menuOpen()) {
+  <div class="sidebar-overlay" (click)="closeMenu()"></div>
+  <aside class="sidebar">
+    <nav class="sidebar__nav">
+      <button class="sidebar__item sidebar__logout" (click)="logout()">
+        Se déconnecter
+      </button>
+      <a
+        class="sidebar__item"
+        routerLink="/feed"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        >Articles</a
+      >
+      <a
+        class="sidebar__item"
+        routerLink="/topics"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        >Thèmes</a
+      >
+    </nav>
+    <a
+      class="sidebar__user"
+      routerLink="/profile"
+      (click)="closeMenu()"
+      aria-label="Profil"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        width="28"
+        height="28"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+      </svg>
+    </a>
+  </aside>
+}
