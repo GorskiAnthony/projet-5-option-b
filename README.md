@@ -194,12 +194,15 @@ cd back
 
 L'API est disponible sur `http://localhost:9000`.
 
+La documentation interactive Swagger UI est accessible sur :
+**`http://localhost:9000/swagger-ui.html`**
+
 Au premier démarrage, Spring Boot crée automatiquement :
 
 - Le schéma de base de données
 - Les 10 thèmes de démo
 - 8 articles et 7 commentaires d'exemple
-- Un utilisateur de test : `user@mdd.com` / `password`
+- Un utilisateur de test : `user@mdd.com` / `Test1234!`
 
 ### Frontend
 
@@ -213,6 +216,8 @@ L'application est disponible sur `http://localhost:4200`.
 ---
 
 ## 8. API — Référence des endpoints
+
+> La documentation interactive complète (Swagger UI) est disponible sur **`http://localhost:9000/swagger-ui.html`** lorsque le backend est lancé. Le schéma OpenAPI brut est accessible sur `http://localhost:9000/v3/api-docs`.
 
 > Toutes les routes sauf `/api/auth/**` nécessitent un header `Authorization: Bearer <token>`.
 
@@ -230,10 +235,10 @@ L'application est disponible sur `http://localhost:4200`.
 }
 ```
 
-| Champ      | Type   | Contraintes                       |
-| ---------- | ------ | --------------------------------- |
-| `username` | string | Obligatoire, 3–30 caractères      |
-| `email`    | string | Obligatoire, format email valide  |
+| Champ      | Type   | Contraintes                                                                                                       |
+| ---------- | ------ | ----------------------------------------------------------------------------------------------------------------- |
+| `username` | string | Obligatoire, 3–30 caractères                                                                                      |
+| `email`    | string | Obligatoire, format email valide                                                                                  |
 | `password` | string | Obligatoire, 8 caractères minimum, doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial |
 
 **Réponse `201 Created` :**
@@ -304,10 +309,10 @@ L'application est disponible sur `http://localhost:4200`.
 }
 ```
 
-| Champ      | Contraintes                      |
-| ---------- | -------------------------------- |
-| `username` | 3–30 caractères (si fourni)      |
-| `email`    | Format email valide (si fourni)  |
+| Champ      | Contraintes                                                                           |
+| ---------- | ------------------------------------------------------------------------------------- |
+| `username` | 3–30 caractères (si fourni)                                                           |
+| `email`    | Format email valide (si fourni)                                                       |
 | `password` | 8 caractères minimum, majuscule + minuscule + chiffre + caractère spécial (si fourni) |
 
 **Réponse `200 OK` :** UserDto mis à jour
@@ -534,13 +539,13 @@ erDiagram
 
 ### Table `users`
 
-| Colonne      | Type         | Contraintes            |
-| ------------ | ------------ | ---------------------- |
-| `id`         | BIGINT       | PK, AUTO_INCREMENT     |
-| `username`   | VARCHAR(255) | NOT NULL, UNIQUE       |
-| `email`      | VARCHAR(255) | NOT NULL, UNIQUE       |
+| Colonne      | Type         | Contraintes              |
+| ------------ | ------------ | ------------------------ |
+| `id`         | BIGINT       | PK, AUTO_INCREMENT       |
+| `username`   | VARCHAR(255) | NOT NULL, UNIQUE         |
+| `email`      | VARCHAR(255) | NOT NULL, UNIQUE         |
 | `password`   | VARCHAR(255) | NOT NULL (Argon2id hash) |
-| `created_at` | DATETIME     |                        |
+| `created_at` | DATETIME     |                          |
 
 ### Table `topics`
 
@@ -563,13 +568,13 @@ erDiagram
 
 ### Table `comments`
 
-| Colonne      | Type         | Contraintes         |
-| ------------ | ------------ | ------------------- |
-| `comment_id` | BIGINT       | PK, AUTO_INCREMENT  |
-| `post_id`    | BIGINT       | FK → posts.post_id  |
-| `user_id`    | BIGINT       | FK → users.id       |
-| `content`    | TEXT         | NOT NULL            |
-| `created_at` | DATETIME     | NOT NULL            |
+| Colonne      | Type     | Contraintes        |
+| ------------ | -------- | ------------------ |
+| `comment_id` | BIGINT   | PK, AUTO_INCREMENT |
+| `post_id`    | BIGINT   | FK → posts.post_id |
+| `user_id`    | BIGINT   | FK → users.id      |
+| `content`    | TEXT     | NOT NULL           |
+| `created_at` | DATETIME | NOT NULL           |
 
 ### Table `user_subscriptions`
 
@@ -608,10 +613,10 @@ Les DTOs et modèles sont exclus de la couverture JaCoCo (POJO sans logique à t
 
 **Résultats (dernière exécution) : 48/48 tests — BUILD SUCCESS**
 
-| Métrique     | Taux  |
-| ------------ | ----- |
-| Instructions | 94 %  |
-| Branches     | 78 %  |
+| Métrique     | Taux |
+| ------------ | ---- |
+| Instructions | 94 % |
+| Branches     | 78 % |
 
 **Couverture par classe :**
 
@@ -651,12 +656,45 @@ Le rapport HTML est généré dans :
 
 **Résultats (dernière exécution) : 129/129 tests — TOTAL: SUCCESS**
 
-| Métrique   | Couvert | Total | Taux     |
-| ---------- | ------- | ----- | -------- |
-| Statements | 200     | 202   | 99 %     |
-| Branches   | 19      | 19    | 100 %    |
-| Functions  | 72      | 73    | 98.63 %  |
-| Lines      | 171     | 173   | 98.84 %  |
+| Métrique   | Couvert | Total | Taux    |
+| ---------- | ------- | ----- | ------- |
+| Statements | 200     | 202   | 99 %    |
+| Branches   | 19      | 19    | 100 %   |
+| Functions  | 72      | 73    | 98.63 % |
+| Lines      | 171     | 173   | 98.84 % |
+
+### Frontend — Tests end-to-end (Playwright)
+
+Les tests e2e simulent un utilisateur réel dans un navigateur Chromium. Ils couvrent les flux principaux de l'application : authentification, fil d'actualité, thèmes, création d'article et profil.
+
+> **Prérequis :** le backend doit être lancé (`./mvnw spring-boot:run` dans `back/`) avant d'exécuter les tests e2e. Le frontend est démarré automatiquement par Playwright.
+
+```bash
+cd front
+
+# Lancer tous les tests e2e (démarre ng serve automatiquement)
+npm run e2e
+
+# Lancer les tests avec l'interface graphique interactive
+npm run e2e:ui
+
+# Ouvrir le rapport HTML après une exécution
+npm run e2e:report
+```
+
+**Organisation des tests :**
+
+| Fichier            | Flux couvert                                          |
+| ------------------ | ----------------------------------------------------- |
+| `auth.setup.ts`    | Login unique — session partagée entre tous les tests  |
+| `auth.spec.ts`     | Connexion valide/invalide, inscription, guard de route |
+| `feed.spec.ts`     | Affichage du fil, tri, navigation vers création       |
+| `topics.spec.ts`   | Liste des thèmes, abonnement, désabonnement           |
+| `posts.spec.ts`    | Formulaire de création, soumettre un article, détail  |
+| `profile.spec.ts`  | Pré-remplissage, sauvegarde, section abonnements      |
+
+Le rapport HTML est généré dans :
+`front/playwright-report/index.html`
 
 ---
 
